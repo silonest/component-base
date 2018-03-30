@@ -17,6 +17,7 @@
     <belerweb.pinyin>2.5.1</belerweb.pinyin>
     <logback.classic>1.2.3</logback.classic>
     <logback.ext.spring>0.1.4</logback.ext.spring>
+    <junit.test>4.12</junit.test>
   </properties>
   
   <build>
@@ -74,6 +75,7 @@
       <artifactId>commons-io</artifactId>
       <version>${apache.common.io}</version>
     </dependency>
+    
     <!--配置logback插件-->
     <!--<dependency>-->
     <!--<groupId>ch.qos.logback</groupId>-->
@@ -85,6 +87,7 @@
     <!--<artifactId>logback-ext-spring</artifactId>-->
     <!--<version>${logback.ext.spring}</version>-->
     <!--</dependency>-->
+    
     <!--配置jackson，用于操作-->
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
@@ -101,6 +104,15 @@
       <artifactId>jackson-annotations</artifactId>
       <version>${jackson.version}</version>
     </dependency>
+    
+    <!-- 配置测试插件 -->
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>${junit.test}</version>
+      <scope>test</scope>
+    </dependency>
+    
   </dependencies>
   
 </project>

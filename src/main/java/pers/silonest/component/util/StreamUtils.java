@@ -1,15 +1,14 @@
-package pers.silonest.component.base.stream;
+package pers.silonest.component.util;
 
 import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-
-import pers.silonest.component.util.StringUtils;
+import java.nio.charset.Charset;
 
 public class StreamUtils {
 
-  private static final String DEFAULT_ENCODING = "utf-8";
+  private static final Charset UTF_8 = Charset.forName("UTF-8");
 
   public static String inputStream2String(InputStream in, String charsetName) {
     if (in == null) {
@@ -18,7 +17,7 @@ public class StreamUtils {
     InputStreamReader inReader = null;
     try {
       if (StringUtils.isEmpty(charsetName)) {
-        inReader = new InputStreamReader(in, DEFAULT_ENCODING);
+        inReader = new InputStreamReader(in, UTF_8);
       } else {
         inReader = new InputStreamReader(in, charsetName);
       }

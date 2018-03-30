@@ -1,4 +1,4 @@
-package pers.silonest.component.base.datetime;
+package pers.silonest.component.util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

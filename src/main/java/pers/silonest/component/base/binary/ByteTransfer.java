@@ -5,22 +5,11 @@ import java.nio.ByteOrder;
 import java.nio.IntBuffer;
 import java.nio.LongBuffer;
 import java.nio.ShortBuffer;
-import pers.silonest.component.base.object.ObjectUtils;
 
-/**
- * ByteTransfer.
- *
- * @author silonest
- * @version v0.0.1
- * @email silonest@icloud.com
- * @time 2018年01月16日 上午8:41
- * @since v1.0.0
- */
-public class ByteTransfer {
-
+public class ByteTransfer implements TypeTransfer {
   private static final int SHROT_BYTE_LENGTH = 2;
   private static final int INT_BYTE_LENGTH = 4;
-  private static final int LONG_BYTE_LENGTH = 8;
+  // private static final int LONG_BYTE_LENGTH = 8;
 
   private byte[] binary;
 
@@ -32,6 +21,7 @@ public class ByteTransfer {
     return this.binary;
   }
 
+  @Override
   public short toShort() {
     if (this.binary == null || this.binary.length == 0) {
       throw new NullPointerException();
@@ -50,6 +40,7 @@ public class ByteTransfer {
     }
   }
 
+  @Override
   public int toInt() {
     if (this.binary == null || this.binary.length == 0) {
       throw new NullPointerException();
@@ -68,6 +59,7 @@ public class ByteTransfer {
     }
   }
 
+  @Override
   public long toLong() {
     if (this.binary == null || this.binary.length == 0) {
       throw new NullPointerException();
@@ -86,5 +78,18 @@ public class ByteTransfer {
     }
   }
 
-
+  public static String byte2Hex(byte[] data) {
+    StringBuilder hs = new StringBuilder(data.length);
+    for (byte b : data) {
+      String stmp = Integer.toHexString(b & 0xFF);
+      if (stmp.length() == 1)
+        hs = hs.append("0").append(stmp);
+      else {
+        hs = hs.append(stmp);
+      }
+      hs.append(" ");
+    }
+    hs.deleteCharAt(hs.length() - 1);
+    return String.valueOf(hs);
+  }
 }

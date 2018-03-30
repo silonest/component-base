@@ -14,7 +14,7 @@ import pers.silonest.component.util.FileUtils;
  * Excel的工具类.通过该类可以根据数据对象的集合正确生成Excel，默认生成在C盘中。该类中还能配置sheet名和sheet的pagesize参数。
  * 该类中所有方法均捕获了可捕获异常并将可捕获异常转译成ExcelExportException，提供给调用方法可供日志记录。
  * 
- * @author 陈晨
+ * @author silonest
  * @since v1.0.0
  * @version v0.0.1
  */

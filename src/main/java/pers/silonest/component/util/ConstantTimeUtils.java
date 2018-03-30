@@ -1,4 +1,4 @@
-package pers.silonest.component.base.object;
+package pers.silonest.component.util;
 /**
  * ConstantTimeUtils.
  *
