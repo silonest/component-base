@@ -5,8 +5,9 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.apache.commons.lang3.StringUtils;
+
 import pers.silonest.component.base.courier.Courier;
+import pers.silonest.component.util.StringUtils;
 
 public class RestResponseBuilder {
 
@@ -65,31 +66,27 @@ public class RestResponseBuilder {
     return this;
   }
 
-  public RestResponseBuilder content(Object value) {
+  public <T> RestResponseBuilder content(T value) {
     this.content = value;
     return this;
   }
 
-  public RestResponseBuilder contents(Map<String, Object> contents) {
-    Map<String, Object> content = new HashMap<String, Object>();
+  public <T> RestResponseBuilder contents(Map<String, T> contents) {
+    Map<String, T> content = new HashMap<String, T>();
     content.putAll(contents);
     this.content = content;
     return this;
   }
 
-  public RestResponseBuilder courier(Courier courier) {
-    return courier(courier, null);
-  }
-
-  public RestResponseBuilder courier(Courier courier, String contentName) {
+  public <T> RestResponseBuilder courier(Courier<T> courier) {
     status(courier.getStatus() ? Status.SUCCESS : Status.ERROR);
-    if (StringUtils.isNotEmpty(courier.getCause())) {
+    if (!StringUtils.isEmpty(courier.getCause())) {
       cause(courier.getCause());
     }
-    if (StringUtils.isNotEmpty(courier.getNotice())) {
+    if (!StringUtils.isEmpty(courier.getNotice())) {
       notice(courier.getNotice());
     }
-    if (StringUtils.isNotEmpty(courier.getCode())) {
+    if (!StringUtils.isEmpty(courier.getCode())) {
       code(courier.getCode());
     }
     if (courier.getContent() != null) {
@@ -120,8 +117,7 @@ public class RestResponseBuilder {
   }
 
   private RestResponse buildHeader(RestResponse restResponse) {
-    if (this.headerVersion == null && this.headerDate == null && this.headerForward == null
-        && this.headerBackward == null) {
+    if (this.headerVersion == null && this.headerDate == null && this.headerForward == null && this.headerBackward == null) {
       return restResponse;
     } else {
       Header header = restResponse.getHeader();
@@ -138,8 +134,7 @@ public class RestResponseBuilder {
   }
 
   private RestResponse buildMessage(RestResponse restResponse) {
-    if ((this.messageCause == null || this.messageCause.isEmpty())
-        && (this.messageNotice == null || this.messageNotice.isEmpty())
+    if ((this.messageCause == null || this.messageCause.isEmpty()) && (this.messageNotice == null || this.messageNotice.isEmpty())
         && (this.messageCode == null || this.messageCode.isEmpty())) {
       return restResponse;
     } else {

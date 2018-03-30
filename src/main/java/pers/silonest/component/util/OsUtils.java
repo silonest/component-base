@@ -28,21 +28,18 @@ public final class OsUtils {
   /*
    * 不允许实例化.
    */
-  private OsUtils() {
-  }
+  private OsUtils() {}
 
   public static boolean isLinux() {
     return CURRENT_OS.indexOf("linux") >= 0;
   }
 
   public static boolean isMacOs() {
-    return CURRENT_OS.indexOf("mac") >= 0 && CURRENT_OS.indexOf("os") > 0
-        && CURRENT_OS.indexOf("x") < 0;
+    return CURRENT_OS.indexOf("mac") >= 0 && CURRENT_OS.indexOf("os") > 0 && CURRENT_OS.indexOf("x") < 0;
   }
 
   public static boolean isMacOsX() {
-    return CURRENT_OS.indexOf("mac") >= 0 && CURRENT_OS.indexOf("os") > 0
-        && CURRENT_OS.indexOf("x") > 0;
+    return CURRENT_OS.indexOf("mac") >= 0 && CURRENT_OS.indexOf("os") > 0 && CURRENT_OS.indexOf("x") > 0;
   }
 
   public static boolean isWindows() {

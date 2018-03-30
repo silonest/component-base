@@ -1,4 +1,4 @@
-package pers.silonest.component.base.courier.paging;
+package pers.silonest.component.base.courier;
 
 /**
  * 分页参数.用于接收分页查询时传入的参数。

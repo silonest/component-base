@@ -1,17 +1,18 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>pers.silonest.component</groupId>
   <artifactId>component-base</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <name>component-base</name>
   <description>工具包</description>
-  
+
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <java.version>1.6</java.version>
     <poi.version>3.17</poi.version>
     <jackson.version>2.8.6</jackson.version>
-    <apache.common.lang>3.7</apache.common.lang>
+    <!-- <apache.common.lang>3.7</apache.common.lang> -->
     <apache.common.io>2.6</apache.common.io>
     <apache.httpclient>4.5.3</apache.httpclient>
     <belerweb.pinyin>2.5.1</belerweb.pinyin>
@@ -19,7 +20,7 @@
     <logback.ext.spring>0.1.4</logback.ext.spring>
     <junit.test>4.12</junit.test>
   </properties>
-  
+
   <build>
     <plugins>
       <plugin>
@@ -30,7 +31,7 @@
           <target>${java.version}</target>
           <encoding>${project.build.sourceEncoding}</encoding>
           <compilerArguments>
-            <verbose/>
+            <verbose />
             <extdirs>src\lib</extdirs>
             <bootclasspath>${java.home}/lib/rt.jar;${java.home}/lib/jce.jar</bootclasspath>
           </compilerArguments>
@@ -40,7 +41,7 @@
   </build>
 
   <dependencies>
-    <!--配置apache poi插件，用于操作excel/word文档-->
+    <!--配置apache poi插件，用于操作excel/word文档 -->
     <dependency>
       <groupId>org.apache.poi</groupId>
       <artifactId>poi</artifactId>
@@ -51,44 +52,38 @@
       <artifactId>poi-ooxml</artifactId>
       <version>${poi.version}</version>
     </dependency>
-    <!--配置commons lang插件，是项目的基础插件-->
-    <dependency>
-      <groupId>org.apache.commons</groupId>
-      <artifactId>commons-lang3</artifactId>
-      <version>${apache.common.lang}</version>
-    </dependency>
-    <!--配置httpclient插件，http操作部分使用以其为基础-->
+    <!--配置httpclient插件，http操作部分使用以其为基础 -->
     <dependency>
       <groupId>org.apache.httpcomponents</groupId>
       <artifactId>httpclient</artifactId>
       <version>${apache.httpclient}</version>
     </dependency>
-    <!--配置拼音操作的插件，拼音操作以其为基础-->
+    <!--配置拼音操作的插件，拼音操作以其为基础 -->
     <dependency>
       <groupId>com.belerweb</groupId>
       <artifactId>pinyin4j</artifactId>
       <version>${belerweb.pinyin}</version>
     </dependency>
-    <!--配置common io插件-->
-    <dependency>
-      <groupId>commons-io</groupId>
-      <artifactId>commons-io</artifactId>
-      <version>${apache.common.io}</version>
-    </dependency>
-    
-    <!--配置logback插件-->
-    <!--<dependency>-->
-    <!--<groupId>ch.qos.logback</groupId>-->
-    <!--<artifactId>logback-classic</artifactId>-->
-    <!--<version>${logback.classic}</version>-->
-    <!--</dependency>-->
-    <!--<dependency>-->
-    <!--<groupId>org.logback-extensions</groupId>-->
-    <!--<artifactId>logback-ext-spring</artifactId>-->
-    <!--<version>${logback.ext.spring}</version>-->
-    <!--</dependency>-->
-    
-    <!--配置jackson，用于操作-->
+    <!--配置common io插件 -->
+    <!-- <dependency> -->
+    <!-- <groupId>commons-io</groupId> -->
+    <!-- <artifactId>commons-io</artifactId> -->
+    <!-- <version>${apache.common.io}</version> -->
+    <!-- </dependency> -->
+
+    <!--配置logback插件 -->
+    <!--<dependency> -->
+    <!--<groupId>ch.qos.logback</groupId> -->
+    <!--<artifactId>logback-classic</artifactId> -->
+    <!--<version>${logback.classic}</version> -->
+    <!--</dependency> -->
+    <!--<dependency> -->
+    <!--<groupId>org.logback-extensions</groupId> -->
+    <!--<artifactId>logback-ext-spring</artifactId> -->
+    <!--<version>${logback.ext.spring}</version> -->
+    <!--</dependency> -->
+
+    <!--配置jackson，用于操作Json数据 -->
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-core</artifactId>
@@ -104,7 +99,7 @@
       <artifactId>jackson-annotations</artifactId>
       <version>${jackson.version}</version>
     </dependency>
-    
+
     <!-- 配置测试插件 -->
     <dependency>
       <groupId>junit</groupId>
@@ -112,7 +107,7 @@
       <version>${junit.test}</version>
       <scope>test</scope>
     </dependency>
-    
+
   </dependencies>
-  
+
 </project>

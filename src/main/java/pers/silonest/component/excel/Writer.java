@@ -86,8 +86,7 @@ class Writer {
    */
   int sheetCount(List<?> paramsList, int pageSize) {
     if (pageSize != 0) {
-      int sheetCount = paramsList.size() % pageSize == 0 ? paramsList.size() / pageSize
-          : paramsList.size() / pageSize + 1;
+      int sheetCount = paramsList.size() % pageSize == 0 ? paramsList.size() / pageSize : paramsList.size() / pageSize + 1;
       return sheetCount;
     } else {
       return 0;
@@ -103,8 +102,7 @@ class Writer {
    * @return poi的sheet对象
    */
   Sheet newSheet(Workbook wb, String sheetName, int sign) {
-    Sheet sheet = (sheetName != null && !"".equals(sheetName)
-        ? wb.createSheet(sheetName + String.valueOf(sign)) : wb.createSheet());
+    Sheet sheet = (sheetName != null && !"".equals(sheetName) ? wb.createSheet(sheetName + String.valueOf(sign)) : wb.createSheet());
     return sheet;
   }
 
@@ -146,9 +144,8 @@ class Writer {
    * @throws NoSuchMethodException 反射异常，抛出此异常时无法创建行或列的值
    * @throws InvocationTargetException 反射异常，抛出此异常时无法创建行或列的值
    */
-  void writeBody(Workbook wb, Sheet sheet, List<?> paramsList, List<Field> fields, int index,
-      int pageSize) throws IllegalArgumentException, IllegalAccessException, InstantiationException,
-      NoSuchMethodException, SecurityException, InvocationTargetException {
+  void writeBody(Workbook wb, Sheet sheet, List<?> paramsList, List<Field> fields, int index, int pageSize) throws IllegalArgumentException,
+      IllegalAccessException, InstantiationException, NoSuchMethodException, SecurityException, InvocationTargetException {
     ExcelCellStyle ecs = new BaseStyle(wb);
     AlignStyle as = new AlignStyle(ecs);
     BackGroundColorStyle2Body bgcs = new BackGroundColorStyle2Body(as);

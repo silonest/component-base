@@ -3,6 +3,8 @@ package pers.silonest.component.http.rest.response;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
+import pers.silonest.component.util.JsonUtils;
+
 /**
  * 为api系统设计的应答类.该类可作为api系统的应答设计的一部分，主要用来按照某种协议存储应答结果。该类以及配套类使用构造模式设计开发，实例化时需要使用专用的构造器。<br>
  * 参照协议的范文如下：
@@ -35,9 +37,12 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
  * </pre>
  *
  * status:应答的状态，共包含"SUCCESS"、"ERROR"、"INVALID"、"NOTACCESSIBLE"、"NORESOURCES"、"EXCEPTION"六种，详见
- * {@linkplain unicorn.common.answer.Status Status}。<br> header:应答头，用来存储和系统相关的信息，如系统版本号，数据库当前时间等。详见{@linkplain
- * unicorn.common.answer.Header Header}。<br> message:应答的交互提示，用来存储用于人机交互的提示信息。 详见{@linkplain
- * unicorn.common.answer.Message Message}。<br> content:使用map存储返回的内容，调用者根据实际情况使用。
+ * {@linkplain unicorn.common.answer.Status Status}。<br>
+ * header:应答头，用来存储和系统相关的信息，如系统版本号，数据库当前时间等。详见{@linkplain pers.silonest.component.http.rest.response.Header
+ * Header}。<br>
+ * message:应答的交互提示，用来存储用于人机交互的提示信息。 详见{@linkplain pers.silonest.component.http.rest.response.Message
+ * Message}。<br>
+ * content:使用map存储返回的内容，调用者根据实际情况使用。
  *
  * @author silonest
  * @version v0.0.1
@@ -48,29 +53,7 @@ public class RestResponse {
 
   @Override
   public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("RestResponse [");
-    sb.append("status=").append(status).append(",");
-    if (header != null) {
-      sb.append("header [");
-      sb.append("version=").append(header.getVersion()).append(",");
-      sb.append("date=").append(header.getDate()).append(",");
-      sb.append("forward=").append(header.getForward()).append(",");
-      sb.append("backward=").append(header.getBackward()).append(",");
-      sb.append("]").append(",");
-    }
-    if (message != null) {
-      sb.append("message [");
-      sb.append("code=").append(message.getCode()).append(",");
-      sb.append("notice=").append(message.getNotice()).append(",");
-      sb.append("cause=").append(message.getCause()).append(",");
-      sb.append("]").append(",");
-    }
-    if (content != null) {
-      sb.append("content=").append(content.toString());
-    }
-    sb.append("]");
-    return sb.toString();
+    return JsonUtils.toJson(this);
   }
 
   public Status getStatus() {

@@ -1,19 +1,22 @@
 package pers.silonest.component.base.courier;
 
-public class Courier {
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
+@JsonInclude(Include.NON_EMPTY)
+public class Courier<T> {
 
   private boolean status;
   private String code;
   private String cause;
   private String notice;
-  private Object content;
-  private String contentName;
+  private T content;
 
   public boolean getStatus() {
     return status;
   }
 
-  public Courier status(boolean status) {
+  public Courier<T> status(boolean status) {
     this.status = status;
     return this;
   }
@@ -22,7 +25,7 @@ public class Courier {
     return code;
   }
 
-  public Courier code(String code) {
+  public Courier<T> code(String code) {
     this.code = code;
     return this;
   }
@@ -31,7 +34,7 @@ public class Courier {
     return cause;
   }
 
-  public Courier setCause(String cause) {
+  public Courier<T> cause(String cause) {
     this.cause = cause;
     return this;
   }
@@ -40,7 +43,7 @@ public class Courier {
     return notice;
   }
 
-  public Courier notice(String notice) {
+  public Courier<T> notice(String notice) {
     this.notice = notice;
     return this;
   }
@@ -49,17 +52,8 @@ public class Courier {
     return content;
   }
 
-  public Courier content(Object content) {
+  public Courier<T> content(T content) {
     this.content = content;
-    return this;
-  }
-
-  public String getContentName() {
-    return contentName;
-  }
-
-  public Courier contentName(String contentName) {
-    this.contentName = contentName;
     return this;
   }
 }

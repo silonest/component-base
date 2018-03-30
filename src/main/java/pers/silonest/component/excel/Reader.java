@@ -1,6 +1,5 @@
 package pers.silonest.component.excel;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
@@ -10,7 +9,6 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
@@ -49,20 +47,6 @@ public class Reader {
       throw new ExcelTransferException(ex);
     } catch (InvalidFormatException ex) {
       throw new ExcelTransferException(ex);
-    } catch (IOException ex) {
-      throw new ExcelTransferException(ex);
-    }
-  }
-
-  /**
-   * 读取文件的内容到二维字符串数组.
-   * 
-   * @param file 文件
-   * @return 读取结果
-   */
-  public Map<String, String[][]> read(File file) {
-    try {
-      return read(FileUtils.openInputStream(file));
     } catch (IOException ex) {
       throw new ExcelTransferException(ex);
     }

@@ -1,6 +1,4 @@
-package pers.silonest.component.base.courier.paging;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
+package pers.silonest.component.base.courier;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,10 +63,8 @@ public class RowSet<T> {
    *
    * @return 空是true，非空是false
    */
-  @JsonIgnore
   public boolean isEmpty() {
-    if ((this.getRows() == null || this.getRows().isEmpty()) && (getTotal() == null
-        || getTotal().intValue() == 0)) {
+    if ((this.getRows() == null || this.getRows().isEmpty()) && (getTotal() == null || getTotal().intValue() == 0)) {
       return true;
     } else {
       return false;
