@@ -1,0 +1,5 @@
+package pers.silonest.component.http;
+
+public enum RequestBodyType {
+  FORM_DATA, X_WWW_FORM_URLENCODED, BINARY, TEXT_PLAIN, APPLICATION_JSON, APPLICATION_JAVASCRIPT, APPLICATION_XML, TEXT_XML, TEXT_HTML;
+}

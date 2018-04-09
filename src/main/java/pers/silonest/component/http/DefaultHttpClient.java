@@ -1,5 +1,9 @@
 package pers.silonest.component.http;
 
-public class DefaultHttpClient extends AbstractHttpClient {
+import org.apache.http.impl.client.HttpClients;
 
+public class DefaultHttpClient extends AbstractHttpClient {
+  public DefaultHttpClient() {
+    this.httpClient = HttpClients.createDefault();
+  }
 }
