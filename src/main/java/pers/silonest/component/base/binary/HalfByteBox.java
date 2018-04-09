@@ -31,7 +31,8 @@ public class HalfByteBox extends ByteBox {
 
   @Override
   public String readHex(int index, int length) {
-    return readHex(index, length);
+    // return readHex(index, length);
+    return null;
   }
 
   @Override
@@ -53,13 +54,11 @@ public class HalfByteBox extends ByteBox {
 
   @Override
   public ByteTransfer readByteTransfer(int index, int length) {
-    // TODO Auto-generated method stub
     return null;
   }
 
   @Override
   public ByteTransfer read2b(int index) {
-    // TODO Auto-generated method stub
     return super.read2b(index);
   }
 }

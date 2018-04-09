@@ -4,7 +4,7 @@ public class HzHexBox extends HexBox {
 
   public HzHexBox(byte[] binary) {
     super(binary);
-    this.hexStr.replaceAll("A", "-");
+    this.hexStr = this.hexStr.replaceAll("A", "-");
   }
 
   @Override

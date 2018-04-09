@@ -18,6 +18,7 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+
 import pers.silonest.component.excel.annotation.ExcelDisguiser;
 import pers.silonest.component.excel.annotation.ExcelFormat;
 import pers.silonest.component.excel.annotation.ExcelInstruction;
@@ -30,6 +31,7 @@ import pers.silonest.component.excel.style.BorderStyle;
 import pers.silonest.component.excel.style.ExcelCellStyle;
 import pers.silonest.component.excel.style.FontStyle2Body;
 import pers.silonest.component.excel.style.FontStyle2Title;
+import pers.silonest.component.util.StringUtils;
 
 /**
  * 生成excel的基础方法，是其他生成excel方法的基类
@@ -205,7 +207,7 @@ class Writer {
             }
           }
           ExcelFormat dataFormat = field.getAnnotation(ExcelFormat.class);
-          if (dataFormat != null && dataFormat.value() != "") {
+          if (dataFormat != null && StringUtils.isNotEmpty(dataFormat.value())) {
             Date value = (Date) paramValue;
             SimpleDateFormat dateFormater = new SimpleDateFormat(dataFormat.value());
             paramValue = dateFormater.format(value);

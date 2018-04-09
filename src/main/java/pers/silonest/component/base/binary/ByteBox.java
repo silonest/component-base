@@ -65,14 +65,14 @@ public abstract class ByteBox implements BinaryBox {
   // }
 
   String strClean(String str) {
-    str.trim(); // 去掉所有首尾空格；
-    str.replace(" ", ""); // 去掉所有空格；
-    str.replaceAll(" ", ""); // 去掉所有空格；
-    str.replaceAll(" +", ""); // 去掉所有空格；
-    str.replaceAll("\\s*", ""); // 替换所有空白字符，不限于空格；
-    str.replaceAll("\r|\n|\t", ""); // 替换空格、回车、换行符、制表符
-    str.replaceAll("\\s*", ""); // * 表示零个或多个
-    str.replaceAll("\\s+", ""); // + 表示一个或多个
+    str = str.trim(); // 去掉所有首尾空格；
+    str = str.replace(" ", ""); // 去掉所有空格；
+    str = str.replaceAll(" ", ""); // 去掉所有空格；
+    str = str.replaceAll(" +", ""); // 去掉所有空格；
+    str = str.replaceAll("\\s*", ""); // 替换所有空白字符，不限于空格；
+    str = str.replaceAll("\r|\n|\t", ""); // 替换空格、回车、换行符、制表符
+    str = str.replaceAll("\\s*", ""); // * 表示零个或多个
+    str = str.replaceAll("\\s+", ""); // + 表示一个或多个
     return str;
   }
 
