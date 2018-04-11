@@ -12,4 +12,8 @@ public interface TypeTransfer {
   public int toInt();
 
   public long toLong();
+
+  public float toFloat();
+
+  public String toHex();
 }

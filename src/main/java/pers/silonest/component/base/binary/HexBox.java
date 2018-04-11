@@ -20,8 +20,7 @@ public class HexBox implements BinaryBox {
     return null;
   }
 
-  @Override
-  public String readHex(int index, int length) {
+  private String readHex(int index, int length) {
     return hexStr.substring(index, index + length);
   }
 

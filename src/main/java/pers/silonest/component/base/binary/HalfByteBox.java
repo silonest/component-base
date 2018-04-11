@@ -30,13 +30,8 @@ public class HalfByteBox extends ByteBox {
   // }
 
   @Override
-  public String readHex(int index, int length) {
-    // return readHex(index, length);
-    return null;
-  }
-
-  @Override
   public byte[] readBytes(int index, int length) {
+    index = index - 1;
     if (length <= 0) {
       throw new ArithmeticException("Non-positive length");
     } else {

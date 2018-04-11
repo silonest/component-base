@@ -13,11 +13,6 @@ public class HzHexBox extends HexBox {
   }
 
   @Override
-  public String readHex(int index, int length) {
-    return this.hexStr.substring(index, index + length);
-  }
-
-  @Override
   public HexTransfer readByteTransfer(int index, int length) {
     return null;
   }

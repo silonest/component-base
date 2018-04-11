@@ -1,7 +1,7 @@
-package pers.silonest.component.http.rest.response.test;
+package test.pers.silonest.component.http.rest.response;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.testng.Assert;
+import org.testng.annotations.Test;
 
 import pers.silonest.component.base.courier.Courier;
 import pers.silonest.component.http.rest.response.RestResponse;

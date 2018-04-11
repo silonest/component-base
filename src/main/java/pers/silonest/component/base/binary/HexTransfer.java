@@ -2,60 +2,62 @@ package pers.silonest.component.base.binary;
 
 public class HexTransfer implements TypeTransfer {
 
-  public String hexStr = null;
+  private String hexStr = null;
 
   public HexTransfer(String hex) {
-    this.hexStr = hex;
+    this.hexStr = hex.toLowerCase().replaceAll(" ", "").trim();
+    int length = hexStr.length();
+    if ((length & 1) == 1) {// 奇数
+      this.hexStr = hexStr.substring(0, length - 1);
+    }
   }
 
   @Override
   public short toShort() {
-    short result = Short.valueOf(this.hexStr).shortValue();
+    short result = Short.parseShort(this.hexStr, 16);
     return result;
   }
 
+  @Override
   public int toInt() {
-    int result = Integer.valueOf(this.hexStr).intValue();
+    int result = Integer.parseInt(this.hexStr, 16);
     return result;
   }
 
   @Override
   public long toLong() {
-    long result = Long.valueOf(this.hexStr).longValue();
+    long result = Long.parseLong(this.hexStr, 16);
     return result;
   }
 
-  private static byte charToByte(char c) {
-    return (byte) "0123456789ABCDEF".indexOf(c);
+  @Override
+  public float toFloat() {
+    Float value = Float.intBitsToFloat(Integer.valueOf(this.hexStr, 16));
+    return value;
   }
 
-  public static byte[] hex2Byte(String hexString) {
-    if (hexString == null || hexString.equals("")) {
-      return null;
-    }
-    hexString = hexString.toUpperCase();
-    int length = hexString.length() / 2;
-    char[] hexChars = hexString.toCharArray();
-    byte[] d = new byte[length];
-    for (int i = 0; i < length; i++) {
-      int pos = i * 2;
-      d[i] = (byte) (charToByte(hexChars[pos]) << 4 | charToByte(hexChars[pos + 1]));
-    }
-    return d;
+  @Override
+  public String toHex() {
+    return hexStr;
   }
 
-  public static String byte2Hex(byte[] data) {
-    StringBuilder hs = new StringBuilder(data.length);
-    for (byte b : data) {
-      String stmp = Integer.toHexString(b & 0xFF);
-      if (stmp.length() == 1)
-        hs = hs.append("0").append(stmp);
-      else {
-        hs = hs.append(stmp);
-      }
-      hs.append(" ");
-    }
-    hs.deleteCharAt(hs.length() - 1);
-    return String.valueOf(hs);
+  public static String short2Hex(short value) {
+    String hex = Integer.toHexString(((int) value & 0xffff));
+    return hex;
+  }
+
+  public static String int2Hex(int value) {
+    String hex = Integer.toHexString(value);
+    return hex;
+  }
+
+  public static String long2Hex(long value) {
+    String hex = Long.toHexString(value);
+    return hex;
+  }
+
+  public static String float2Hex(float value) {
+    String hex = Integer.toHexString(Float.floatToIntBits(value));
+    return hex;
   }
 }

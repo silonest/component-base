@@ -5,7 +5,8 @@ public abstract class ByteBox implements BinaryBox {
 
   @Override
   public byte[] readBytes(int index, int length) {
-    if (length <= 0) {
+    index = index - 1;
+    if (length <= 0 || index < 0) {
       throw new ArithmeticException("Non-positive length");
     } else {
       byte[] result = new byte[length];
@@ -15,17 +16,13 @@ public abstract class ByteBox implements BinaryBox {
   }
 
   @Override
-  public String readHex(int index, int length) {
-    return null;
-  }
-
-  @Override
   public ByteTransfer readByteTransfer(int index, int length) {
     byte[] result = readBytes(index, length);
     return new ByteTransfer(result);
   }
 
   public ByteTransfer read2b(int index) {
+    index = index - 1;
     return readByteTransfer(index, 2);
   }
   //
@@ -64,16 +61,16 @@ public abstract class ByteBox implements BinaryBox {
   // return fb.get();
   // }
 
-  String strClean(String str) {
-    str = str.trim(); // 去掉所有首尾空格；
-    str = str.replace(" ", ""); // 去掉所有空格；
-    str = str.replaceAll(" ", ""); // 去掉所有空格；
-    str = str.replaceAll(" +", ""); // 去掉所有空格；
-    str = str.replaceAll("\\s*", ""); // 替换所有空白字符，不限于空格；
-    str = str.replaceAll("\r|\n|\t", ""); // 替换空格、回车、换行符、制表符
-    str = str.replaceAll("\\s*", ""); // * 表示零个或多个
-    str = str.replaceAll("\\s+", ""); // + 表示一个或多个
-    return str;
-  }
+  // String strClean(String str) {
+  // str = str.trim(); // 去掉所有首尾空格；
+  // str = str.replace(" ", ""); // 去掉所有空格；
+  // str = str.replaceAll(" ", ""); // 去掉所有空格；
+  // str = str.replaceAll(" +", ""); // 去掉所有空格；
+  // str = str.replaceAll("\\s*", ""); // 替换所有空白字符，不限于空格；
+  // str = str.replaceAll("\r|\n|\t", ""); // 替换空格、回车、换行符、制表符
+  // str = str.replaceAll("\\s*", ""); // * 表示零个或多个
+  // str = str.replaceAll("\\s+", ""); // + 表示一个或多个
+  // return str;
+  // }
 
 }
