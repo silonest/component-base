@@ -1,15 +1,21 @@
 package pers.silonest.component.base.binary;
 
-public class HexTransfer implements TypeTransfer {
+public class HexConvert implements DataConvert {
 
   private String hexStr = null;
 
-  public HexTransfer(String hex) {
+  public HexConvert(String hex) {
     this.hexStr = hex.toLowerCase().replaceAll(" ", "").trim();
     int length = hexStr.length();
     if ((length & 1) == 1) {// 奇数
       this.hexStr = hexStr.substring(0, length - 1);
     }
+  }
+
+
+  @Override
+  public byte[] toByteArray() {
+    return ByteConvert.hex2ByteArray(hexStr);
   }
 
   @Override
@@ -60,4 +66,5 @@ public class HexTransfer implements TypeTransfer {
     String hex = Integer.toHexString(Float.floatToIntBits(value));
     return hex;
   }
+
 }

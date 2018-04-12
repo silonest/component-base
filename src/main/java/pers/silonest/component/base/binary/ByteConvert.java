@@ -3,7 +3,7 @@ package pers.silonest.component.base.binary;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
-public class ByteTransfer implements TypeTransfer {
+public class ByteConvert implements DataConvert {
   private static final int SHORT_BYTE_LENGTH = 2;
   private static final int INT_BYTE_LENGTH = 4;
   private static final int LONG_BYTE_LENGTH = 8;
@@ -11,11 +11,12 @@ public class ByteTransfer implements TypeTransfer {
   private static final char[] HEX_CHAR = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
   private byte[] binary;
 
-  public ByteTransfer(byte[] binary) {
+  public ByteConvert(byte[] binary) {
     this.binary = binary;
   }
 
-  public byte[] getBinary() {
+  @Override
+  public byte[] toByteArray() {
     return this.binary;
   }
 
@@ -140,14 +141,14 @@ public class ByteTransfer implements TypeTransfer {
     }
   }
 
-  public static byte[] short2Binary(short value) {
+  public static byte[] short2ByteArray(short value) {
     byte[] result = new byte[2];
     result[0] = (byte) ((value >> 8) & 0xFF);
     result[1] = (byte) (value & 0xFF);
     return result;
   }
 
-  public static byte[] int2Binary(int value) {
+  public static byte[] int2ByteArray(int value) {
     byte[] result = new byte[4];
     // 由高位到低位
     result[0] = (byte) ((value >> 24) & 0xFF);
@@ -157,7 +158,7 @@ public class ByteTransfer implements TypeTransfer {
     return result;
   }
 
-  public static byte[] long2Binary(long value) {
+  public static byte[] long2ByteArray(long value) {
     byte[] result = new byte[8];
     // 由高位到低位
     result[0] = (byte) ((value >> 56) & 0xFF);
@@ -171,7 +172,7 @@ public class ByteTransfer implements TypeTransfer {
     return result;
   }
 
-  public static byte[] float2Binary(float value) {
+  public static byte[] float2ByteArray(float value) {
     // 把float转换为byte[]
     int fbit = Float.floatToIntBits(value);
     byte[] b = new byte[FLOAT_BYTE_LENGTH];
@@ -194,7 +195,7 @@ public class ByteTransfer implements TypeTransfer {
     return dest;
   }
 
-  public static byte[] hex2Binary(String hex) {
+  public static byte[] hex2ByteArray(String hex) {
     String temp = hex.replaceAll(" ", "").toLowerCase();
     byte[] b = new byte[temp.length() / 2];
     for (int i = 0; i < b.length; i++) {

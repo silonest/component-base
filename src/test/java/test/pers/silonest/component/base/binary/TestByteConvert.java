@@ -4,9 +4,9 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-import pers.silonest.component.base.binary.ByteTransfer;
+import pers.silonest.component.base.binary.ByteConvert;
 
-public class TestByteTransfer {
+public class TestByteConvert {
   private short TEST_BYTE_TO_SHORT = 36;
   private int TEST_BYTE_TO_INT = 33626;
   private long TEST_BYTE_TO_LONG = 336666666;
@@ -28,7 +28,7 @@ public class TestByteTransfer {
   @BeforeTest
   public void init() {
     // 生成short的正常测试数据。
-    this.shortBytes = ByteTransfer.short2Binary((short) TEST_BYTE_TO_SHORT);
+    this.shortBytes = ByteConvert.short2ByteArray((short) TEST_BYTE_TO_SHORT);
     // 生成溢出一位的short数据，用于溢出用例的测试。
     this.overFlowShortBytes = new byte[this.shortBytes.length + 1];
     for (int i = 0; i < shortBytes.length; i++) {
@@ -36,7 +36,7 @@ public class TestByteTransfer {
     }
     this.overFlowShortBytes[this.shortBytes.length] = 26;
     // 生成int的正常测试数据。
-    this.intBytes = ByteTransfer.int2Binary(TEST_BYTE_TO_INT);
+    this.intBytes = ByteConvert.int2ByteArray(TEST_BYTE_TO_INT);
     // 生成溢出一位的int数据，用于溢出用例的测试。
     this.overFlowIntBytes = new byte[this.intBytes.length + 1];
     for (int i = 0; i < intBytes.length; i++) {
@@ -44,7 +44,7 @@ public class TestByteTransfer {
     }
     this.overFlowIntBytes[this.intBytes.length] = 26;
     // 生成long的正常测试数据。
-    this.longBytes = ByteTransfer.long2Binary(TEST_BYTE_TO_LONG);
+    this.longBytes = ByteConvert.long2ByteArray(TEST_BYTE_TO_LONG);
     // 生成溢出一位的long数据，用于溢出用例的测试。
     this.overFlowLongBytes = new byte[this.longBytes.length + 1];
     for (int i = 0; i < longBytes.length; i++) {
@@ -52,17 +52,27 @@ public class TestByteTransfer {
     }
     this.overFlowLongBytes[this.longBytes.length] = 26;
     // 生成float的正常测试数据。
-    this.floatBytes = ByteTransfer.float2Binary(TEST_BYTE_TO_FLOAT);
+    this.floatBytes = ByteConvert.float2ByteArray(TEST_BYTE_TO_FLOAT);
     // 生成溢出一位的hex数据，用于溢出用例的测试。
     this.overFlowFloatBytes = new byte[this.floatBytes.length + 1];
     for (int i = 0; i < floatBytes.length; i++) {
       this.overFlowFloatBytes[i] = this.floatBytes[i];
     }
     // 生成高低字节转换的float测试数据。
-    this.flipFloatBytes = ByteTransfer.hex2Binary(TEST_BYTE_TO_FLOAT_WITH_PARAMETER);
+    this.flipFloatBytes = ByteConvert.hex2ByteArray(TEST_BYTE_TO_FLOAT_WITH_PARAMETER);
     this.overFlowFloatBytes[this.floatBytes.length] = 26;
     // 生成hex的测试数据。
-    this.hexBytes = ByteTransfer.hex2Binary(TEST_BYTE_TO_HEX);
+    this.hexBytes = ByteConvert.hex2ByteArray(TEST_BYTE_TO_HEX);
+  }
+
+  /**
+   * 转换成字节数组的正常用例.
+   */
+  @Test
+  public void testToByteArray() {
+    ByteConvert bt = new ByteConvert(this.shortBytes);
+    byte[] result = bt.toByteArray();
+    Assert.assertEquals(result, this.shortBytes);
   }
 
   /**
@@ -70,7 +80,7 @@ public class TestByteTransfer {
    */
   @Test
   public void testToShort() {
-    ByteTransfer bt = new ByteTransfer(this.shortBytes);
+    ByteConvert bt = new ByteConvert(this.shortBytes);
     short result = bt.toShort();
     Assert.assertEquals(result, TEST_BYTE_TO_SHORT);
   }
@@ -80,7 +90,7 @@ public class TestByteTransfer {
    */
   @Test
   public void testToShortOverFlow() {
-    ByteTransfer bt = new ByteTransfer(this.overFlowShortBytes);
+    ByteConvert bt = new ByteConvert(this.overFlowShortBytes);
     short result = bt.toShort();
     Assert.assertEquals(result, TEST_BYTE_TO_SHORT);
   }
@@ -90,7 +100,7 @@ public class TestByteTransfer {
    */
   @Test
   public void testToInt() {
-    ByteTransfer bt = new ByteTransfer(this.intBytes);
+    ByteConvert bt = new ByteConvert(this.intBytes);
     int result = bt.toInt();
     Assert.assertEquals(result, TEST_BYTE_TO_INT);
   }
@@ -100,7 +110,7 @@ public class TestByteTransfer {
    */
   @Test
   public void testToIntOverFlow() {
-    ByteTransfer bt = new ByteTransfer(this.overFlowIntBytes);
+    ByteConvert bt = new ByteConvert(this.overFlowIntBytes);
     int result = bt.toInt();
     Assert.assertEquals(result, TEST_BYTE_TO_INT);
   }
@@ -110,7 +120,7 @@ public class TestByteTransfer {
    */
   @Test
   public void testToLong() {
-    ByteTransfer bt = new ByteTransfer(this.longBytes);
+    ByteConvert bt = new ByteConvert(this.longBytes);
     long result = bt.toLong();
     Assert.assertEquals(result, TEST_BYTE_TO_LONG);
   }
@@ -120,7 +130,7 @@ public class TestByteTransfer {
    */
   @Test
   public void testToLongOverFlow() {
-    ByteTransfer bt = new ByteTransfer(this.overFlowLongBytes);
+    ByteConvert bt = new ByteConvert(this.overFlowLongBytes);
     long result = bt.toLong();
     Assert.assertEquals(result, TEST_BYTE_TO_LONG);
   }
@@ -130,14 +140,14 @@ public class TestByteTransfer {
    */
   @Test
   public void testToFloat() {
-    ByteTransfer bt = new ByteTransfer(this.floatBytes);
+    ByteConvert bt = new ByteConvert(this.floatBytes);
     float result = bt.toFloat();
     Assert.assertEquals(result, TEST_BYTE_TO_FLOAT);
   }
 
   @Test
   public void testToFloatWithFormat() {
-    ByteTransfer bt = new ByteTransfer(this.flipFloatBytes);
+    ByteConvert bt = new ByteConvert(this.flipFloatBytes);
     float result = bt.toFloat("C3-C4-C1-C2");
     Assert.assertEquals(result, 33.66666F);
   }
@@ -147,7 +157,7 @@ public class TestByteTransfer {
    */
   @Test
   public void testToFloatOverFlow() {
-    ByteTransfer bt = new ByteTransfer(this.overFlowFloatBytes);
+    ByteConvert bt = new ByteConvert(this.overFlowFloatBytes);
     float result = bt.toFloat();
     Assert.assertEquals(result, TEST_BYTE_TO_FLOAT);
   }
@@ -157,7 +167,7 @@ public class TestByteTransfer {
    */
   @Test
   public void testToHex() {
-    ByteTransfer bt = new ByteTransfer(this.hexBytes);
+    ByteConvert bt = new ByteConvert(this.hexBytes);
     String result = bt.toHex();
     Assert.assertEquals(result, TEST_BYTE_TO_HEX.toLowerCase());
   }
