@@ -6,54 +6,61 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 @JsonInclude(Include.NON_EMPTY)
 public class Courier<T> {
 
-  private boolean status;
+  private boolean status = true;
   private String code;
   private String cause;
   private String notice;
   private T content;
 
+  public Courier() {
+
+  }
+
+  Courier(boolean status, String code, String cause, String notice, T content) {
+    this.status = status;
+    this.code = code;
+    this.cause = cause;
+    this.notice = notice;
+    this.content = content;
+  }
+
+  public void setStatus(boolean status) {
+    this.status = status;
+  }
+
   public boolean getStatus() {
     return status;
   }
 
-  public Courier<T> status(boolean status) {
-    this.status = status;
-    return this;
+  public void setCode(String code) {
+    this.code = code;
   }
 
   public String getCode() {
     return code;
   }
 
-  public Courier<T> code(String code) {
-    this.code = code;
-    return this;
+  public void setCause(String cause) {
+    this.cause = cause;
   }
 
   public String getCause() {
     return cause;
   }
 
-  public Courier<T> cause(String cause) {
-    this.cause = cause;
-    return this;
+  public void setNotice(String notice) {
+    this.notice = notice;
   }
 
   public String getNotice() {
     return notice;
   }
 
-  public Courier<T> notice(String notice) {
-    this.notice = notice;
-    return this;
+  public void setContent(T content) {
+    this.content = content;
   }
 
   public Object getContent() {
     return content;
-  }
-
-  public Courier<T> content(T content) {
-    this.content = content;
-    return this;
   }
 }

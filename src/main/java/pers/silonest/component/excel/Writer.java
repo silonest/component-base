@@ -19,9 +19,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import pers.silonest.component.excel.annotation.ExcelDisguiser;
+import pers.silonest.component.excel.annotation.ExcelDisguised;
 import pers.silonest.component.excel.annotation.ExcelFormat;
-import pers.silonest.component.excel.annotation.ExcelInstruction;
+import pers.silonest.component.excel.annotation.ExcelColumn;
 import pers.silonest.component.excel.pojo.Title;
 import pers.silonest.component.excel.style.AlignStyle;
 import pers.silonest.component.excel.style.BackGroundColorStyle2Body;
@@ -73,7 +73,7 @@ class Writer {
   List<Title> newTitle(List<Field> fields) {
     List<Title> rsList = new ArrayList<Title>();
     for (Field field : fields) {
-      ExcelInstruction ep = field.getAnnotation(ExcelInstruction.class);
+      ExcelColumn ep = field.getAnnotation(ExcelColumn.class);
       rsList.add(new Title(ep.order(), ep.title()));
     }
     return rsList;
@@ -187,7 +187,7 @@ class Writer {
         if (paramValue == null) {
           cell.setCellValue("");
         } else {
-          ExcelDisguiser dataDisg = field.getAnnotation(ExcelDisguiser.class);
+          ExcelDisguised dataDisg = field.getAnnotation(ExcelDisguised.class);
           if (dataDisg != null) {
             Class<?> dataDisgClass = dataDisg.using();
             if (dataDisgClass != Void.class) {
@@ -243,7 +243,7 @@ class Writer {
     Field[] allFields = cls.getDeclaredFields();
     List<Field> fields = new ArrayList<Field>();
     for (Field field : allFields) {
-      if (field.getAnnotation(ExcelInstruction.class) != null) {
+      if (field.getAnnotation(ExcelColumn.class) != null) {
         fields.add(field);
       }
     }
@@ -254,8 +254,8 @@ class Writer {
 
   public class ComparatorField implements Comparator<Field> {
     public int compare(Field o1, Field o2) {
-      String order1 = o1.getAnnotation(ExcelInstruction.class).order();
-      String order2 = o2.getAnnotation(ExcelInstruction.class).order();
+      String order1 = o1.getAnnotation(ExcelColumn.class).order();
+      String order2 = o2.getAnnotation(ExcelColumn.class).order();
       return order1.compareTo(order2);
     }
   }

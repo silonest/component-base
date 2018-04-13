@@ -1,7 +1,7 @@
 package pers.silonest.component.excel.pojo;
 
 /**
- * excel操作类的表头模型类。 该类是对excel表头的抽象，title为表头内容，order为表头顺序
+ * excel操作类的表头模型类.该类是对excel表头的抽象，title为表头内容，order为表头顺序
  * 
  * @author 陈晨
  * @time 2014年12月12日

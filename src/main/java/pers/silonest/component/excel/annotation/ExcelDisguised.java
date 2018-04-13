@@ -18,7 +18,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Inherited
-public @interface ExcelDisguiser {
+public @interface ExcelDisguised {
   /**
    * 字段的处理类.
    * 

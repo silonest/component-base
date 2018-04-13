@@ -9,12 +9,12 @@ package pers.silonest.component.excel.bind;
  * @version v0.0.1
  * @param <T>
  */
-public interface Disguiser<T> {
+public interface Disguised<T> {
   /**
-   * 面具方法.属性值通过面具方法将内容转换成客户需要的样子。比如0 >> 失败，1 >> 成功。
+   * 属性值通过该方法将内容转换成客户需要的样子.比如0 >> 失败，1 >> 成功。
    * 
    * @param param
    * @return
    */
-  public T mask(Object param);
+  public T execute(Object param);
 }

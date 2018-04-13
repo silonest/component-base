@@ -17,7 +17,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Inherited
-public abstract @interface ExcelInstruction {
+public abstract @interface ExcelColumn {
   /**
    * excel中的列顺序.
    * 

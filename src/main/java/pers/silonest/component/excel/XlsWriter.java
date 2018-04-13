@@ -11,7 +11,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import pers.silonest.component.excel.annotation.ExcelInstruction;
+import pers.silonest.component.excel.annotation.ExcelColumn;
 import pers.silonest.component.excel.pojo.Title;
 
 /**
@@ -46,9 +46,9 @@ class XlsWriter extends Writer {
     Collections.sort(fields, new Comparator<Field>() {
       public int compare(Field o1, Field o2) {
         Field field1 = o1;
-        ExcelInstruction inst1 = field1.getAnnotation(ExcelInstruction.class);
+        ExcelColumn inst1 = field1.getAnnotation(ExcelColumn.class);
         Field field2 = o2;
-        ExcelInstruction inst2 = field2.getAnnotation(ExcelInstruction.class);
+        ExcelColumn inst2 = field2.getAnnotation(ExcelColumn.class);
         return Integer.valueOf(inst1.order()).compareTo(Integer.valueOf(inst2.order()));
       }
     });
@@ -100,9 +100,9 @@ class XlsWriter extends Writer {
       Collections.sort(fields, new Comparator<Field>() {
         public int compare(Field o1, Field o2) {
           Field field1 = o1;
-          ExcelInstruction inst1 = field1.getAnnotation(ExcelInstruction.class);
+          ExcelColumn inst1 = field1.getAnnotation(ExcelColumn.class);
           Field field2 = o2;
-          ExcelInstruction inst2 = field2.getAnnotation(ExcelInstruction.class);
+          ExcelColumn inst2 = field2.getAnnotation(ExcelColumn.class);
           return Integer.valueOf(inst1.order()).compareTo(Integer.valueOf(inst2.order()));
         }
       });
