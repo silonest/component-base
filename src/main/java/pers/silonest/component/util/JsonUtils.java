@@ -20,34 +20,44 @@ import java.io.IOException;
  */
 public abstract class JsonUtils {
   /**
-   * The default private {@link ObjectMapper} instance.
+   * 私有的 {@link ObjectMapper} 实例.用来转译Json数据。
    */
   private static final ObjectMapper MAPPER = new ObjectMapper();
 
   static {
+    // 如果被转换的对象不可序列化时，将它们序列化成空对象。如果设置成true，则会抛出不能序列化的异常。
     MAPPER.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+    // 可以将json字符串中的""转换到object中属性的""，如果设置成false，则只能转换null。
     MAPPER.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
+    // 可以使用反斜杠的形式转译特殊字符。
     MAPPER.configure(JsonParser.Feature.ALLOW_BACKSLASH_ESCAPING_ANY_CHARACTER, true);
+    // 在json字符串中可以使用java/c++类型的注释，如果设置成false，则不能正确解析这些注解。
     MAPPER.configure(JsonParser.Feature.ALLOW_COMMENTS, true);
+    // 可以将json字符串中的某些特殊值转换为数字型，比如NaN转换成0，INF转换成正无穷，-INF转换为负无穷。
     MAPPER.configure(JsonParser.Feature.ALLOW_NON_NUMERIC_NUMBERS, true);
+    // 可以解析有如"00001"这样带前导"0"的数字，由于标准json不允许这种情况，如果设置成false，遇到前导0的情况会抛出异常。
     MAPPER.configure(JsonParser.Feature.ALLOW_NUMERIC_LEADING_ZEROS, true);
+    // 可以解析使用单引号作为字符串引用的json数据，用于标准json只允许双引号，如果设置成false，遇到单引号情况会抛出异常。
     MAPPER.configure(JsonParser.Feature.ALLOW_SINGLE_QUOTES, true);
+    // 可以解析json字符串中的ASC码小于32的特殊字符，如果设置成false，遇到该情况时会抛出异常。
     MAPPER.configure(JsonParser.Feature.ALLOW_UNQUOTED_CONTROL_CHARS, true);
+    // 可以解析不带引号的字符名，由于不符合json标准，果设置成false，会抛出异常。
     MAPPER.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
+    // 遇到没有声明set方法的属性时，不会抛出异常，如果设置成true，则会抛出异常。
     MAPPER.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
   }
 
   /**
-   * Private constructor.
+   * 不能实例化.
    */
   private JsonUtils() {}
 
   /**
-   * Convert an object to JSON data.
+   * 将对象转换成json字符串.
    *
-   * @param object the object
+   * @param 存储数据的数据源
    *
-   * @return the JSON data parsed from original object
+   * @return 从数据源转换成的json字符串
    */
   public static String toJson(Object object) {
     try {
@@ -58,13 +68,13 @@ public abstract class JsonUtils {
   }
 
   /**
-   * Convert Json data to an object of specified type.
+   * 将json字符串转换成对象.
    *
-   * @param json the JSON data
-   * @param clazz the class instance of result object
-   * @param <T> the type of result object
+   * @param json字符串
+   * @param 转换的对象类型
+   * @param <T> 结果的类型
    *
-   * @return the result object parsed from original JSON data
+   * @return json字符串转换成的object对象。
    */
   public static <T> T toObject(String json, Class<T> clazz) {
     try {
@@ -75,13 +85,13 @@ public abstract class JsonUtils {
   }
 
   /**
-   * Convert JSON data to an object of specified type.
+   * 将json数据转换成对象.
    *
-   * @param json the JSON data
-   * @param typeReference the type reference
-   * @param <T> the type of result object
+   * @param json字符串
+   * @param 对象的引用类型
+   * @param <T> 结果的类型
    *
-   * @return the result object parsed from original JSON data
+   * @return json字符串转换成的object对象。
    */
   public static <T> T toObject(String json, TypeReference<T> typeReference) {
     try {
@@ -92,13 +102,13 @@ public abstract class JsonUtils {
   }
 
   /**
-   * Convert JSON data to an object of specified type.
+   * 将json数据转换成对象.使用自定义的jsonparser将json字符串转换成对象。
    *
-   * @param json the JSON data
-   * @param parser the parser to parse JSON data
-   * @param <T> the type of result object
+   * @param json字符串
+   * @param jsonparser的实例
+   * @param <T> 结果的类型
    *
-   * @return the result object parsed from original JSON data
+   * @return json字符串转换成的object对象。
    */
   public static <T> T toObject(String json, JsonNodeParser<T> parser) {
     try {
@@ -108,19 +118,7 @@ public abstract class JsonUtils {
     }
   }
 
-  /**
-   * A parser that parse a {@link JsonNode} instance to an object of specified type.
-   *
-   * @param <T> the type of result object
-   */
   public interface JsonNodeParser<T> {
-    /**
-     * Parse an {@link JsonNode} instance to an Object of type <code>T</code>.
-     *
-     * @param jsonNode the instance to parse
-     *
-     * @return the result object of type <code>T</code>
-     */
     T parse(JsonNode jsonNode);
   }
 
