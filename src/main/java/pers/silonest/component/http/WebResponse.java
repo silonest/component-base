@@ -1,10 +1,10 @@
 package pers.silonest.component.http;
 
-public class SimplyHttpResponse<T> {
+public class WebResponse<T> {
   private int statusCode;
   private T content;
 
-  public SimplyHttpResponse(int statusCode, T content) {
+  public WebResponse(int statusCode, T content) {
     this.statusCode = statusCode;
     this.content = content;
   }

@@ -14,7 +14,7 @@
     <jackson.version>2.8.6</jackson.version>
     <!-- <apache.common.lang>3.7</apache.common.lang> -->
     <apache.common.io>2.6</apache.common.io>
-    <!-- <apache.commons.logging>1.2</apache.commons.logging> -->
+    <apache.commons.logging>1.2</apache.commons.logging>
     <apache.httpclient>4.5.3</apache.httpclient>
     <belerweb.pinyin>2.5.1</belerweb.pinyin>
     <logback.classic>1.2.3</logback.classic>
@@ -85,6 +85,12 @@
     <!-- <artifactId>commons-io</artifactId> -->
     <!-- <version>${apache.common.io}</version> -->
     <!-- </dependency> -->
+    
+    <dependency>
+      <groupId>commons-logging</groupId>
+      <artifactId>commons-logging</artifactId>
+      <version>${apache.commons.logging}</version>
+    </dependency>
 
     <!--配置logback插件 -->
     <!--<dependency> -->

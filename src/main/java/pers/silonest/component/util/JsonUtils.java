@@ -55,7 +55,7 @@ public abstract class JsonUtils {
   /**
    * 将对象转换成json字符串.
    *
-   * @param 存储数据的数据源
+   * @param object 存储数据的数据源
    *
    * @return 从数据源转换成的json字符串
    */
@@ -63,6 +63,23 @@ public abstract class JsonUtils {
     try {
       return MAPPER.writeValueAsString(object);
     } catch (JsonProcessingException e) {
+      throw new RuntimeException(e);
+    }
+  }
+
+  /**
+   * 将对象转换成JsonNode.
+   * 
+   * @param object 存储数据的数据源
+   * @return 从数据源转换成的JsonNode
+   */
+  public static JsonNode toJsonNode(Object object) {
+    String jsonStr = toJson(object);
+    try {
+      return MAPPER.readTree(jsonStr);
+    } catch (JsonProcessingException e) {
+      throw new RuntimeException(e);
+    } catch (IOException e) {
       throw new RuntimeException(e);
     }
   }

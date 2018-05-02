@@ -26,7 +26,7 @@ public class TestOneByteBox {
     int intResult = bbox.read(1, 1).toInt();
     long longResult = bbox.read(1, 1).toLong();
     String secondHexResult = bbox.read(2, 1).toHex();
-    float floatResult = bbox.read(4, 4).toFloat("C3-C4-C1-C2");
+    float floatResult = bbox.read(4, 4).toFloat("C2-C1-C4-C3");
 
     Assert.assertEquals(hexResult, "01");
     Assert.assertEquals(shortResult, 1);

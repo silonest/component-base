@@ -37,6 +37,10 @@ public abstract class ByteBox implements BinaryBox {
     return new ByteConvert(result);
   }
 
+  public ByteConvert readAll() {
+    return read(1, this.binary.length);
+  }
+
   public ByteConvert read2Byte(int index) {
     return read(index, 2);
   }
@@ -53,4 +57,11 @@ public abstract class ByteBox implements BinaryBox {
     return read(index, 16);
   }
 
+  public int getLength() {
+    if (this.binary == null) {
+      return 0;
+    } else {
+      return this.binary.length;
+    }
+  }
 }

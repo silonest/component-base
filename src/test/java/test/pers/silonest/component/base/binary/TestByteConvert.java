@@ -1,10 +1,13 @@
 package test.pers.silonest.component.base.binary;
 
+import static org.testng.Assert.assertEquals;
+
 import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import pers.silonest.component.base.binary.ByteConvert;
+import pers.silonest.component.base.binary.TypeTransferFormatException;
 
 public class TestByteConvert {
   private short TEST_BYTE_TO_SHORT = 36;
@@ -12,8 +15,11 @@ public class TestByteConvert {
   private long TEST_BYTE_TO_LONG = 336666666;
   private float TEST_BYTE_TO_FLOAT = 1.234567f;
   private String TEST_BYTE_TO_HEX = "33666666";
+  private String TEST_BYTE_TO_HEX_FORMAT = "3366";
   // 注意：如果修改了“TEST_BYTE_TO_FLOAT_WITH_PARAMETER”值，需要修改断言中的参照值。
+  private String TEST_BYTE_TO_INT_WITH_PARAMETER = "00240000";
   private String TEST_BYTE_TO_FLOAT_WITH_PARAMETER = "AAA94206";
+  private String TEST_BYTE_TO_LONG_WITH_PARAMETER = "0024000000000000";
   private byte[] longBytes;
   private byte[] overFlowLongBytes;
   private byte[] intBytes;
@@ -22,8 +28,11 @@ public class TestByteConvert {
   private byte[] overFlowShortBytes;
   private byte[] floatBytes;
   private byte[] overFlowFloatBytes;
+  private byte[] flipIntBytes;
+  private byte[] flipLongBytes;
   private byte[] flipFloatBytes;
   private byte[] hexBytes;
+  private byte[] hexBytesFormat;
 
   @BeforeTest
   public void init() {
@@ -60,9 +69,12 @@ public class TestByteConvert {
     }
     // 生成高低字节转换的float测试数据。
     this.flipFloatBytes = ByteConvert.hex2ByteArray(TEST_BYTE_TO_FLOAT_WITH_PARAMETER);
+    this.flipIntBytes = ByteConvert.hex2ByteArray(TEST_BYTE_TO_INT_WITH_PARAMETER);
+    this.flipLongBytes = ByteConvert.hex2ByteArray(TEST_BYTE_TO_LONG_WITH_PARAMETER);
     this.overFlowFloatBytes[this.floatBytes.length] = 26;
     // 生成hex的测试数据。
     this.hexBytes = ByteConvert.hex2ByteArray(TEST_BYTE_TO_HEX);
+    this.hexBytesFormat = ByteConvert.hex2ByteArray(TEST_BYTE_TO_HEX_FORMAT);
   }
 
   /**
@@ -85,6 +97,12 @@ public class TestByteConvert {
     Assert.assertEquals(result, TEST_BYTE_TO_SHORT);
   }
 
+  @Test(expectedExceptions = NullPointerException.class)
+  public void testToShortThrowNullPointException() {
+    ByteConvert bt = new ByteConvert(null);
+    bt.toShort();
+  }
+
   /**
    * 转换成short的溢出用例.当传入的字节数组大于2时，方法应会自动截取前2位，并将其转换成short型。
    */
@@ -105,6 +123,11 @@ public class TestByteConvert {
     Assert.assertEquals(result, TEST_BYTE_TO_INT);
   }
 
+  @Test(expectedExceptions = NullPointerException.class)
+  public void testToIntThrowNullPointException() {
+    new ByteConvert(null).toInt();
+  }
+
   /**
    * 转换成int的溢出用例.当传入的字节数组长度大于4时，方法应会自动截取前4位并将其转换成int型。
    */
@@ -113,6 +136,16 @@ public class TestByteConvert {
     ByteConvert bt = new ByteConvert(this.overFlowIntBytes);
     int result = bt.toInt();
     Assert.assertEquals(result, TEST_BYTE_TO_INT);
+  }
+
+  /**
+   * 转换成int带format参数的测试用例.
+   */
+  @Test
+  public void testToIntWithFormat() {
+    ByteConvert bt = new ByteConvert(this.flipIntBytes);
+    int result = bt.toInt("c3-c4-c1-c2");
+    Assert.assertEquals(result, 36);
   }
 
   /**
@@ -136,6 +169,25 @@ public class TestByteConvert {
   }
 
   /**
+   * 转换成long的异常用例.当传入参数为空时，应抛出空指针异常。
+   */
+  @Test(expectedExceptions = NullPointerException.class)
+  public void testToLongThrowNullPointException() {
+    ByteConvert bt = new ByteConvert(null);
+    bt.toLong();
+  }
+
+  /**
+   * 转换成long的格式化用例.
+   */
+  @Test()
+  public void testToLongWithFormat() {
+    ByteConvert bt = new ByteConvert(this.flipLongBytes);
+    long result = bt.toLong("c8-c8-c6-c5-c4-c3-c1-c2");
+    assertEquals(result, 36);
+  }
+
+  /**
    * 转换成float的正常用例.
    */
   @Test
@@ -146,10 +198,37 @@ public class TestByteConvert {
   }
 
   @Test
-  public void testToFloatWithFormat() {
+  public void testToFloatWithFormatUpperCase() {
     ByteConvert bt = new ByteConvert(this.flipFloatBytes);
-    float result = bt.toFloat("C3-C4-C1-C2");
+    float result = bt.toFloat("C2-C1-C4-C3");
     Assert.assertEquals(result, 33.66666F);
+  }
+
+  @Test
+  public void testToFloatWithFormatLowerCase() {
+    ByteConvert bt = new ByteConvert(this.flipFloatBytes);
+    float result = bt.toFloat("c2-c1-c4-c3");
+    Assert.assertEquals(result, 33.66666F);
+  }
+
+  @Test
+  public void testToFloatWithFaildFormat() {
+    ByteConvert bt = new ByteConvert(this.flipFloatBytes);
+    float result = bt.toFloat("c2-c1-c4-c3-c5");
+    Assert.assertEquals(result, 33.66666F);
+  }
+
+  @Test
+  public void testToFloatWithFormatNoStr() {
+    ByteConvert bt = new ByteConvert(this.flipFloatBytes);
+    float result = bt.toFloat("2-1-4-3");
+    Assert.assertEquals(result, 33.66666F);
+  }
+
+  @Test(expectedExceptions = TypeTransferFormatException.class)
+  public void testToFloatWithFormatThrowTypeTransferFormatException() {
+    ByteConvert bt = new ByteConvert(this.flipFloatBytes);
+    bt.toFloat("2-1-3");
   }
 
   /**
@@ -162,6 +241,12 @@ public class TestByteConvert {
     Assert.assertEquals(result, TEST_BYTE_TO_FLOAT);
   }
 
+  @Test(expectedExceptions = NullPointerException.class)
+  public void testToFloatThrowNullPointerException() {
+    ByteConvert bt = new ByteConvert(null);
+    bt.toFloat();
+  }
+
   /**
    * 转换成hex的正常用例.
    */
@@ -170,5 +255,15 @@ public class TestByteConvert {
     ByteConvert bt = new ByteConvert(this.hexBytes);
     String result = bt.toHex();
     Assert.assertEquals(result, TEST_BYTE_TO_HEX.toLowerCase());
+  }
+
+  /**
+   * 转换成hex的格式化用例.
+   */
+  @Test
+  public void testToHexWithFormat() {
+    ByteConvert bt = new ByteConvert(this.hexBytesFormat);
+    String result = bt.toHex("c2-c1");
+    Assert.assertEquals(result, "6633");
   }
 }

@@ -60,6 +60,11 @@ public class ByteConvert implements DataConvert {
     }
   }
 
+  public int toInt(String format) {
+    adjustByteOrder(INT_BYTE_LENGTH, format);
+    return toInt();
+  }
+
   @Override
   public long toLong() {
     if (this.binary == null || this.binary.length == 0) {
@@ -80,6 +85,11 @@ public class ByteConvert implements DataConvert {
     }
   }
 
+  public long toLong(String format) {
+    adjustByteOrder(LONG_BYTE_LENGTH, format);
+    return toLong();
+  }
+
   @Override
   public float toFloat() {
     if (this.binary == null || this.binary.length == 0) {
@@ -98,18 +108,8 @@ public class ByteConvert implements DataConvert {
   }
 
   public float toFloat(String format) {
-    // TODO 需要增加format的动态配置，在v0.0.1版本中不支持动态配置。
-    if ("C3-C4-C1-C2".equalsIgnoreCase(format)) {
-      byte[] temp = new byte[FLOAT_BYTE_LENGTH];
-      temp[0] = this.binary[1];
-      temp[1] = this.binary[0];
-      temp[2] = this.binary[3];
-      temp[3] = this.binary[2];
-      this.binary = temp;
-      return toFloat();
-    } else {
-      throw new TypeTransferFormatException("Parameter is error!");
-    }
+    adjustByteOrder(FLOAT_BYTE_LENGTH, format);
+    return toFloat();
   }
 
   @Override
@@ -129,6 +129,11 @@ public class ByteConvert implements DataConvert {
     return new String(buf);
   }
 
+  public String toHex(String format) {
+    adjustByteOrder(this.binary.length, format);
+    return toHex();
+  }
+
   private byte[] processBinary(int size) {
     if (this.binary.length < size) {
       byte[] result = new byte[size];
@@ -138,6 +143,19 @@ public class ByteConvert implements DataConvert {
       return result;
     } else {
       return this.binary;
+    }
+  }
+
+  private void adjustByteOrder(int size, String format) {
+    try {
+      String[] formatArry = format.split("-");
+      byte[] temp = new byte[size];
+      for (int index = 0; index < size; index++) {
+        temp[index] = this.binary[Integer.valueOf(formatArry[index].replaceAll("C", "").replaceAll("c", "")) - 1];
+      }
+      this.binary = temp;
+    } catch (Throwable ex) {
+      throw new TypeTransferFormatException("Parameter is error!");
     }
   }
 
