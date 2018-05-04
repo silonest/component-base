@@ -25,11 +25,13 @@ public abstract class ByteBox implements BinaryBox {
     index = index - 1;
     if (length <= 0 || index < 0) {
       throw new ArithmeticException("Non-positive length");
-    } else {
-      byte[] result = new byte[length];
-      System.arraycopy(this.binary, index, result, 0, length);
-      return result;
     }
+    if (length > (this.binary.length - index)) {
+      length = this.binary.length - index;
+    }
+    byte[] result = new byte[length];
+    System.arraycopy(this.binary, index, result, 0, length);
+    return result;
   }
 
   public ByteConvert read(int index, int length) {
@@ -41,16 +43,32 @@ public abstract class ByteBox implements BinaryBox {
     return read(1, this.binary.length);
   }
 
+  public ByteConvert read2Byte() {
+    return read2Byte(1);
+  }
+
   public ByteConvert read2Byte(int index) {
     return read(index, 2);
+  }
+
+  public ByteConvert read4Byte() {
+    return read4Byte(1);
   }
 
   public ByteConvert read4Byte(int index) {
     return read(index, 4);
   }
 
+  public ByteConvert read8Byte() {
+    return read8Byte(1);
+  }
+
   public ByteConvert read8Byte(int index) {
     return read(index, 8);
+  }
+
+  public ByteConvert read16Byte() {
+    return read16Byte(1);
   }
 
   public ByteConvert read16Byte(int index) {

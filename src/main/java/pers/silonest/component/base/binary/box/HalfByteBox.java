@@ -18,20 +18,28 @@ public class HalfByteBox extends ByteBox {
   @Override
   public byte[] readByteArray(int index, int length) {
     index = index - 1;
-    if (length <= 0) {
+    if (length <= 0 || index < 0) {
       throw new ArithmeticException("Non-positive length");
-    } else {
-      byte[] binary = super.getBinary();
-      byte[] temp = new byte[NumberUtils.isEvenNumber(length) ? length : length + 1];
-      System.arraycopy(binary, index, temp, 0, length);
-      byte[] result = new byte[temp.length / 2];
-      for (int i = 0; i < temp.length; i += 2) {
-        byte hbyte = NumberUtils.isEvenNumber(index) ? temp[i] : (byte) (temp[i] << 4);
-        byte lbyte = NumberUtils.isEvenNumber(index) ? temp[i + 1] : (byte) (temp[i + 1] >>> 4);
-        result[i / 2] = (byte) (hbyte | lbyte);
-      }
-      return result;
     }
+    if (length > (this.getBinary().length - index)) {
+      length = this.getBinary().length - index;
+    }
+    byte[] binary = super.getBinary();
+    byte[] temp = new byte[NumberUtils.isEvenNumber(length) ? length : length + 1];
+    System.arraycopy(binary, index, temp, 0, length);
+    byte[] result = new byte[temp.length / 2];
+    for (int i = 0; i < temp.length; i += 2) {
+      byte hbyte = NumberUtils.isEvenNumber(index) ? temp[i] : (byte) ((temp[i] & 0x0f) << 4);
+      byte lbyte = NumberUtils.isEvenNumber(index) ? temp[i + 1] : (byte) ((temp[i + 1] & 0xf0) >>> 4);
+      result[i / 2] = (byte) (hbyte | lbyte);
+    }
+    return result;
+  }
+
+  @Override
+  public ByteConvert readAll() {
+    byte[] result = readByteArray(1, this.getBinary().length);
+    return new ByteConvert(result);
   }
 
   @Override
@@ -41,8 +49,18 @@ public class HalfByteBox extends ByteBox {
   }
 
   @Override
+  public ByteConvert read2Byte() {
+    return read2Byte(1);
+  }
+
+  @Override
   public ByteConvert read2Byte(int index) {
     return read(index, 4);
+  }
+
+  @Override
+  public ByteConvert read4Byte() {
+    return read4Byte(1);
   }
 
   @Override
@@ -51,12 +69,31 @@ public class HalfByteBox extends ByteBox {
   }
 
   @Override
+  public ByteConvert read8Byte() {
+    return read8Byte(1);
+  }
+
+  @Override
   public ByteConvert read8Byte(int index) {
     return read(index, 16);
   }
 
   @Override
+  public ByteConvert read16Byte() {
+    return read16Byte(1);
+  }
+
+  @Override
   public ByteConvert read16Byte(int index) {
     return read(index, 32);
+  }
+
+  @Override
+  public int getLength() {
+    if (this.getBinary() == null) {
+      return 0;
+    } else {
+      return this.getBinary().length;
+    }
   }
 }

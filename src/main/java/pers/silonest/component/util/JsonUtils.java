@@ -63,7 +63,7 @@ public abstract class JsonUtils {
     try {
       return MAPPER.writeValueAsString(object);
     } catch (JsonProcessingException e) {
-      throw new RuntimeException(e);
+      throw new JsonParserException("Processing object to json is failed!");
     }
   }
 
@@ -74,13 +74,18 @@ public abstract class JsonUtils {
    * @return 从数据源转换成的JsonNode
    */
   public static JsonNode toJsonNode(Object object) {
-    String jsonStr = toJson(object);
+    String jsonStr;
+    if (object instanceof String) {
+      jsonStr = (String) object;
+    } else {
+      jsonStr = toJson(object);
+    }
     try {
       return MAPPER.readTree(jsonStr);
     } catch (JsonProcessingException e) {
-      throw new RuntimeException(e);
+      throw new JsonParserException("Processing json charset failed!");
     } catch (IOException e) {
-      throw new RuntimeException(e);
+      throw new JsonParserException("Processing json charset failed!");
     }
   }
 
