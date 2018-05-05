@@ -18,4 +18,6 @@ public interface DataConvert {
   public float toFloat();
 
   public String toHex();
+
+  public String toASCII();
 }

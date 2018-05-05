@@ -1,5 +1,6 @@
 package pers.silonest.component.base.binary;
 
+import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
@@ -114,24 +115,46 @@ public class ByteConvert implements DataConvert {
 
   @Override
   public String toHex() {
-    char[] buf = new char[this.binary.length * 2];
-    int a = 0;
-    int index = 0;
-    for (byte b : this.binary) {
-      if (b < 0) {
-        a = 256 + b;
-      } else {
-        a = b;
+    if (this.binary == null || this.binary.length == 0) {
+      throw new NullPointerException();
+    } else {
+      char[] buf = new char[this.binary.length * 2];
+      int a = 0;
+      int index = 0;
+      for (byte b : this.binary) {
+        if (b < 0) {
+          a = 256 + b;
+        } else {
+          a = b;
+        }
+        buf[index++] = HEX_CHAR[a / 16];
+        buf[index++] = HEX_CHAR[a % 16];
       }
-      buf[index++] = HEX_CHAR[a / 16];
-      buf[index++] = HEX_CHAR[a % 16];
+      return new String(buf);
     }
-    return new String(buf);
   }
 
   public String toHex(String format) {
     adjustByteOrder(this.binary.length, format);
     return toHex();
+  }
+
+  @Override
+  public String toASCII() {
+    if (this.binary == null || this.binary.length == 0) {
+      throw new NullPointerException();
+    } else {
+      try {
+        return new String(this.binary, "ISO8859-1");
+      } catch (UnsupportedEncodingException e) {
+        return null;
+      }
+    }
+  }
+
+  public String toASCII(String format) {
+    adjustByteOrder(this.binary.length, format);
+    return toASCII();
   }
 
   private byte[] processBinary(int size) {

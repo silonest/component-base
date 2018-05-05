@@ -20,6 +20,8 @@ public class TestByteConvert {
   private String TEST_BYTE_TO_INT_WITH_PARAMETER = "00240000";
   private String TEST_BYTE_TO_FLOAT_WITH_PARAMETER = "AAA94206";
   private String TEST_BYTE_TO_LONG_WITH_PARAMETER = "0024000000000000";
+  private String TEST_BYTE_TO_ASCII = "2b494d45493a";
+  private String TEST_BYTE_TO_ASCII_FORMAT = "492b4d45493a";
   private byte[] longBytes;
   private byte[] overFlowLongBytes;
   private byte[] intBytes;
@@ -33,6 +35,8 @@ public class TestByteConvert {
   private byte[] flipFloatBytes;
   private byte[] hexBytes;
   private byte[] hexBytesFormat;
+  private byte[] asciiBytes;
+  private byte[] asciiBytesFormat;
 
   @BeforeTest
   public void init() {
@@ -75,6 +79,9 @@ public class TestByteConvert {
     // 生成hex的测试数据。
     this.hexBytes = ByteConvert.hex2ByteArray(TEST_BYTE_TO_HEX);
     this.hexBytesFormat = ByteConvert.hex2ByteArray(TEST_BYTE_TO_HEX_FORMAT);
+    // 生成ascii的测试数据。
+    this.asciiBytes = ByteConvert.hex2ByteArray(TEST_BYTE_TO_ASCII);
+    this.asciiBytesFormat = ByteConvert.hex2ByteArray(TEST_BYTE_TO_ASCII_FORMAT);
   }
 
   /**
@@ -265,5 +272,28 @@ public class TestByteConvert {
     ByteConvert bt = new ByteConvert(this.hexBytesFormat);
     String result = bt.toHex("c2-c1");
     Assert.assertEquals(result, "6633");
+  }
+
+  /**
+   * 转换成ascii的正常用例。
+   */
+  @Test
+  public void testToASCII() {
+    ByteConvert bt = new ByteConvert(this.asciiBytes);
+    String result = bt.toASCII();
+    Assert.assertEquals(result, "+IMEI:");
+  }
+
+  @Test(description = "ByteConvert.toASCII的测试用例，传入格式化的format，应能根据format调整字节。")
+  public void testToASCIIFormat() {
+    ByteConvert bt = new ByteConvert(this.asciiBytesFormat);
+    String result = bt.toASCII("c2-c1-c3-c4-c5-c6");
+    Assert.assertEquals(result, "+IMEI:");
+  }
+
+  @Test(description = "ByteConvert.toASCII的测试用例，传入null，应抛出NullPointerException", expectedExceptions = NullPointerException.class)
+  public void testToASCIIThrowNullPointerException() {
+    ByteConvert bt = new ByteConvert(null);
+    bt.toASCII();
   }
 }

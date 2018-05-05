@@ -170,4 +170,11 @@ public class TestHalfByteBox {
     int length = bbox.getLength();
     Assert.assertEquals(length, 18);
   }
+
+  @Test(description = "HalfByteBox.getLength测试用例，测试当传入的数组是null时，调用getLength方法返回的是否是0。")
+  public void testGetLengthWithNull() {
+    ByteBox bbox = new HalfByteBox(null);
+    int length = bbox.getLength();
+    Assert.assertEquals(length, 0);
+  }
 }

@@ -6,13 +6,17 @@ import pers.silonest.component.util.NumberUtils;
 public class HalfByteBox extends ByteBox {
 
   public HalfByteBox(byte[] binary) {
-    byte[] temp = new byte[binary.length * 2];
-    for (int i = 0; i < binary.length; i++) {
-      byte b = binary[i];
-      temp[i * 2] = (byte) (b & 0xf0);
-      temp[(i * 2) + 1] = (byte) (b & 0x0f);
+    if (binary == null) {
+      super.setBinary(null);
+    } else {
+      byte[] temp = new byte[binary.length * 2];
+      for (int i = 0; i < binary.length; i++) {
+        byte b = binary[i];
+        temp[i * 2] = (byte) (b & 0xf0);
+        temp[(i * 2) + 1] = (byte) (b & 0x0f);
+      }
+      super.setBinary(temp);
     }
-    super.setBinary(temp);
   }
 
   @Override

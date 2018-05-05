@@ -14,6 +14,7 @@ public class TestHexConvert {
   private long TEST_BYTE_TO_LONG = 336666666;
   private float TEST_BYTE_TO_FLOAT = 33.666F;
   private String TEST_BYTE_TO_HEX = "33 66 66";
+  private String TEST_HEX_TO_ASCII = "2b494d45493a";
   private String shortHex;
   private String shortHexOverFlow;
   private String intHex;
@@ -22,6 +23,7 @@ public class TestHexConvert {
   private String longHexOverFlow;
   private String floatHex;
   private String floatHexOverFlow;
+  private String asciiHex;
 
   @BeforeTest
   public void init() {
@@ -33,6 +35,7 @@ public class TestHexConvert {
     this.longHexOverFlow = longHex + "6";
     this.floatHex = HexConvert.float2Hex(TEST_BYTE_TO_FLOAT);
     this.floatHexOverFlow = floatHex + "6";
+    this.asciiHex = TEST_HEX_TO_ASCII;
   }
 
   @Test
@@ -94,5 +97,11 @@ public class TestHexConvert {
   public void testToHex() {
     HexConvert hc = new HexConvert(TEST_BYTE_TO_HEX);
     Assert.assertEquals(hc.toHex(), TEST_BYTE_TO_HEX.replaceAll(" ", "").trim().toLowerCase());
+  }
+
+  @Test(description = "HexConvert.toASCII测试用例，根据传入的hex字符串，将其转成正确的ASCII字符串。")
+  public void testToASCII() {
+    HexConvert hc = new HexConvert(asciiHex);
+    Assert.assertEquals(hc.toASCII(), "+IMEI:");
   }
 }

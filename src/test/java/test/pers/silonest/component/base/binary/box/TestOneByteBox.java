@@ -175,4 +175,5 @@ public class TestOneByteBox {
     String hexResult = bbox.read(7, 3).toHex();
     Assert.assertEquals(hexResult, "9E 0E 32".replaceAll(" ", "").toLowerCase());
   }
+
 }

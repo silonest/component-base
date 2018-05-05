@@ -12,7 +12,6 @@ public class HexConvert implements DataConvert {
     }
   }
 
-
   @Override
   public byte[] toByteArray() {
     return ByteConvert.hex2ByteArray(hexStr);
@@ -45,6 +44,13 @@ public class HexConvert implements DataConvert {
   @Override
   public String toHex() {
     return hexStr;
+  }
+
+  @Override
+  public String toASCII() {
+    byte[] data = ByteConvert.hex2ByteArray(this.hexStr);
+    ByteConvert bc = new ByteConvert(data);
+    return bc.toASCII();
   }
 
   public static String short2Hex(short value) {
