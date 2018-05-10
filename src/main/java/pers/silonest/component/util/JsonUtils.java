@@ -60,10 +60,14 @@ public abstract class JsonUtils {
    * @return 从数据源转换成的json字符串
    */
   public static String toJson(Object object) {
-    try {
-      return MAPPER.writeValueAsString(object);
-    } catch (JsonProcessingException e) {
-      throw new JsonParserException("Processing object to json is failed!");
+    if (!ObjectUtils.isEmpty(object)) {
+      try {
+        return MAPPER.writeValueAsString(object);
+      } catch (JsonProcessingException e) {
+        throw new JsonParserException("Processing object to json is failed!");
+      }
+    } else {
+      return null;
     }
   }
 
@@ -74,18 +78,31 @@ public abstract class JsonUtils {
    * @return 从数据源转换成的JsonNode
    */
   public static JsonNode toJsonNode(Object object) {
-    String jsonStr;
-    if (object instanceof String) {
-      jsonStr = (String) object;
+    if (!ObjectUtils.isEmpty(object)) {
+      if (object instanceof byte[]) {
+        try {
+          return MAPPER.readTree((byte[]) object);
+        } catch (JsonProcessingException e) {
+          throw new JsonParserException("Processing json charset failed!");
+        } catch (IOException e) {
+          throw new JsonParserException("Processing json charset failed!");
+        }
+      }
+      String jsonStr;
+      if (object instanceof String) {
+        jsonStr = (String) object;
+      } else {
+        jsonStr = toJson(object);
+      }
+      try {
+        return MAPPER.readTree(jsonStr);
+      } catch (JsonProcessingException e) {
+        throw new JsonParserException("Processing json charset failed!");
+      } catch (IOException e) {
+        throw new JsonParserException("Processing json charset failed!");
+      }
     } else {
-      jsonStr = toJson(object);
-    }
-    try {
-      return MAPPER.readTree(jsonStr);
-    } catch (JsonProcessingException e) {
-      throw new JsonParserException("Processing json charset failed!");
-    } catch (IOException e) {
-      throw new JsonParserException("Processing json charset failed!");
+      return null;
     }
   }
 
@@ -99,10 +116,14 @@ public abstract class JsonUtils {
    * @return json字符串转换成的object对象。
    */
   public static <T> T toObject(String json, Class<T> clazz) {
-    try {
-      return MAPPER.readValue(json, clazz);
-    } catch (IOException e) {
-      throw new RuntimeException(e);
+    if (StringUtils.isNotEmpty(json)) {
+      try {
+        return MAPPER.readValue(json, clazz);
+      } catch (IOException e) {
+        throw new RuntimeException(e);
+      }
+    } else {
+      return null;
     }
   }
 
@@ -116,10 +137,14 @@ public abstract class JsonUtils {
    * @return json字符串转换成的object对象。
    */
   public static <T> T toObject(String json, TypeReference<T> typeReference) {
-    try {
-      return MAPPER.readValue(json, typeReference);
-    } catch (IOException e) {
-      throw new RuntimeException(e);
+    if (StringUtils.isNotEmpty(json)) {
+      try {
+        return MAPPER.readValue(json, typeReference);
+      } catch (IOException e) {
+        throw new RuntimeException(e);
+      }
+    } else {
+      return null;
     }
   }
 
@@ -133,10 +158,14 @@ public abstract class JsonUtils {
    * @return json字符串转换成的object对象。
    */
   public static <T> T toObject(String json, JsonNodeParser<T> parser) {
-    try {
-      return parser.parse(MAPPER.readTree(json));
-    } catch (IOException e) {
-      throw new RuntimeException(e);
+    if (StringUtils.isNotEmpty(json)) {
+      try {
+        return parser.parse(MAPPER.readTree(json));
+      } catch (IOException e) {
+        throw new RuntimeException(e);
+      }
+    } else {
+      return null;
     }
   }
 

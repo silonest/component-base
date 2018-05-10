@@ -1,6 +1,6 @@
 package pers.silonest.component.excel;
 
-import pers.silonest.component.util.DateUtils;
+import pers.silonest.component.util.TimeUtils;
 import pers.silonest.component.util.StringUtils;
 
 /**
@@ -122,7 +122,7 @@ public class ExcelBuilder {
   /*
    * 文件名，不包含路径，不带后缀。
    */
-  private String fileName = DateUtils.getCurrentTime("yyyy-MM-dd_HH-mm-ss");
+  private String fileName = TimeUtils.getCurrentTime("yyyy-MM-dd_HH-mm-ss");
   /*
    * 文件类型
    */

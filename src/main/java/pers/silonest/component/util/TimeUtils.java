@@ -14,7 +14,7 @@ import javax.xml.bind.DataBindingException;
  * @since v1.0.0
  * @version v0.0.1
  */
-public class DateUtils {
+public class TimeUtils {
 
   /**
    * 获取指定日期是第几天

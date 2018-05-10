@@ -24,6 +24,7 @@ public class TestHexConvert {
   private String floatHex;
   private String floatHexOverFlow;
   private String asciiHex;
+  private String byteArrayHex;
 
   @BeforeTest
   public void init() {
@@ -36,6 +37,7 @@ public class TestHexConvert {
     this.floatHex = HexConvert.float2Hex(TEST_BYTE_TO_FLOAT);
     this.floatHexOverFlow = floatHex + "6";
     this.asciiHex = TEST_HEX_TO_ASCII;
+    this.byteArrayHex = HexConvert.byteArray2Hex(ByteConvert.hex2ByteArray(TEST_BYTE_TO_HEX));
   }
 
   @Test
@@ -104,4 +106,11 @@ public class TestHexConvert {
     HexConvert hc = new HexConvert(asciiHex);
     Assert.assertEquals(hc.toASCII(), "+IMEI:");
   }
+
+  @Test(description = "测试byteArrayToHex方法的用例。")
+  public void testByteArrayToHex() {
+    HexConvert hc = new HexConvert(byteArrayHex);
+    Assert.assertEquals(hc.toHex(), TEST_BYTE_TO_HEX.replaceAll(" ", "").toLowerCase());
+  }
+
 }

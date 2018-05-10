@@ -73,4 +73,9 @@ public class HexConvert implements DataConvert {
     return hex;
   }
 
+  public static String byteArray2Hex(byte[] binary) {
+    ByteConvert bc = new ByteConvert(binary);
+    return bc.toHex();
+  }
+
 }
