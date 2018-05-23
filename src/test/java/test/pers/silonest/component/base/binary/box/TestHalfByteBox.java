@@ -59,6 +59,8 @@ public class TestHalfByteBox {
     ByteBox bbox = new HalfByteBox(modbusFrame1Binary);
     String hexResult = bbox.read(8, 4).toHex();
     Assert.assertEquals(hexResult, "6513");
+    String hexResult2 = bbox.read(8, 3).toHex();
+    Assert.assertEquals(hexResult2, "651");
   }
 
   @Test(description = "HalfByteBox.read测试用例，传入了错误的index，应抛出一个程序异常。", expectedExceptions = ArithmeticException.class)

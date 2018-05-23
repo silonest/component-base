@@ -62,7 +62,7 @@ public class ByteConvert implements DataConvert {
   }
 
   public int toInt(String format) {
-    adjustByteOrder(INT_BYTE_LENGTH, format);
+    adjustByteOrder(this.binary.length, format);
     return toInt();
   }
 
@@ -87,7 +87,7 @@ public class ByteConvert implements DataConvert {
   }
 
   public long toLong(String format) {
-    adjustByteOrder(LONG_BYTE_LENGTH, format);
+    adjustByteOrder(this.binary.length, format);
     return toLong();
   }
 

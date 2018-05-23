@@ -7,14 +7,5 @@ package pers.silonest.component.base.binary.box;
  *
  */
 public interface BinaryBox {
-  // /**
-  // * 从index位置（包含index）开始向后取length长的byte.
-  // *
-  // * @param index 当前位置（从1开始）
-  // * @param length 读取长度
-  // * @return 类型转换器
-  // */
-  // public DataConvert read(int index, int length);
-
   public byte[] readByteArray(int index, int length);
 }
