@@ -7,6 +7,7 @@ package pers.silonest.component.base.binary;
  *
  */
 public interface DataConvert {
+
   public byte[] toByteArray();
 
   public short toShort();
@@ -20,4 +21,5 @@ public interface DataConvert {
   public String toHex();
 
   public String toASCII();
+
 }

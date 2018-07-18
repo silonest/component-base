@@ -10,6 +10,8 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 
 import java.io.IOException;
 
+import pers.silonest.component.base.exception.JsonParserException;
+
 /**
  * 使用jackson操作json.
  * 

@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import pers.silonest.component.util.JsonParserException;
+import pers.silonest.component.base.exception.JsonParserException;
 import pers.silonest.component.util.JsonUtils;
 
 public class TestJsonUtils {

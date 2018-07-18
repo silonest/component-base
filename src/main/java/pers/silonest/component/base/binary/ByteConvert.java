@@ -5,6 +5,7 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
 public class ByteConvert implements DataConvert {
+
   private static final int SHORT_BYTE_LENGTH = 2;
   private static final int INT_BYTE_LENGTH = 4;
   private static final int LONG_BYTE_LENGTH = 8;
@@ -246,4 +247,5 @@ public class ByteConvert implements DataConvert {
     }
     return b;
   }
+
 }

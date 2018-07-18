@@ -1,7 +1,7 @@
 package pers.silonest.component.base.binary;
 
 public class HexConvert implements DataConvert {
-
+  
   private String hexStr = null;
 
   public HexConvert(String hex) {
@@ -77,5 +77,5 @@ public class HexConvert implements DataConvert {
     ByteConvert bc = new ByteConvert(binary);
     return bc.toHex();
   }
-
+  
 }
