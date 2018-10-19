@@ -1,6 +1,6 @@
 package test.pers.silonest.component.util;
 
-public class TestPojo {
+class TestPojo {
   private String column1;
   private String column2;
 

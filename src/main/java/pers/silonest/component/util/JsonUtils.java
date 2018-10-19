@@ -73,6 +73,38 @@ public abstract class JsonUtils {
     }
   }
 
+  public static JsonNode toJsonNode(String json) {
+    if (!StringUtils.isEmpty(json)) {
+      try {
+        JsonNode node = MAPPER.readTree(json);
+        return node;
+      } catch (IOException e) {
+        throw new JsonParserException("Processing object to json is failed!");
+      }
+    } else {
+      return null;
+    }
+  }
+
+  public static String getJson(String json, String path) {
+    if (!StringUtils.isEmpty(json)) {
+      try {
+        JsonNode node = MAPPER.readTree(json);
+        String[] pathSet = path.split("\\.");
+        for (String name : pathSet) {
+          node = node.get(name);
+        }
+        return node.toString();
+      } catch (JsonProcessingException e) {
+        throw new JsonParserException("Processing object to json is failed!");
+      } catch (IOException e) {
+        throw new JsonParserException("Processing object to json is failed!");
+      }
+    } else {
+      return null;
+    }
+  }
+
   /**
    * 将对象转换成JsonNode.
    * 
@@ -166,6 +198,15 @@ public abstract class JsonUtils {
       } catch (IOException e) {
         throw new RuntimeException(e);
       }
+    } else {
+      return null;
+    }
+  }
+
+  public static <T> T toObject(String json, String jsonPath, Class<T> clazz) {
+    if (StringUtils.isNotEmpty(json)) {
+      String jsonPathString = getJson(json, jsonPath);
+      return toObject(jsonPathString, clazz);
     } else {
       return null;
     }

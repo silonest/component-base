@@ -6,9 +6,11 @@ import org.apache.http.NameValuePair;
 import org.apache.http.ParseException;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpEntityEnclosingRequestBase;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpPut;
 import org.apache.http.config.Registry;
 import org.apache.http.config.RegistryBuilder;
 import org.apache.http.conn.socket.ConnectionSocketFactory;
@@ -165,22 +167,35 @@ public abstract class AbstractHttpRequest implements WebRequest {
 
   @Override
   public <T> WebResponse<String> doPut(String url, Map<String, T> params) {
-    return doPut(url, params, UTF_8);
-  }
-
-  @Override
-  public <T> WebResponse<String> doPut(String url, Map<String, T> params, Charset charset) {
-    return doPut(url, null, params, charset);
+    return doPut(url, null, params, UTF_8, UTF_8, RequestBodyType.APPLICATION_JSON);
   }
 
   @Override
   public <T> WebResponse<String> doPut(String url, Map<String, String> header, Map<String, T> params) {
-    return doPut(url, header, params, UTF_8);
+    return doPut(url, header, params, UTF_8, UTF_8, RequestBodyType.APPLICATION_JSON);
   }
 
   @Override
-  public <T> WebResponse<String> doPut(String url, Map<String, String> header, Map<String, T> params, Charset charset) {
-    return null;
+  public <T> WebResponse<String> doPut(String url, Map<String, String> header, Map<String, T> params, RequestBodyType requestBodyType) {
+    return doPut(url, header, params, UTF_8, UTF_8, requestBodyType);
+  }
+
+  @Override
+  public <T> WebResponse<String> doPut(String url, Map<String, String> header, Map<String, T> params, Charset requestCharset, Charset responseCharset,
+      RequestBodyType requestBodyType) {
+    HttpPut httpPut = new HttpPut();
+    CloseableHttpResponse httpResponse = executeHttpClient(httpPut, url, header, params, requestCharset, requestBodyType);
+    int httpStatusCode = httpResponse.getStatusLine().getStatusCode();
+    HttpEntity entity = httpResponse.getEntity();
+    try {
+      String content = EntityUtils.toString(entity, responseCharset);
+      WebResponse<String> result = new WebResponse<String>(httpStatusCode, content);
+      return result;
+    } catch (ParseException e) {
+      throw new UnknownResponseException(e);
+    } catch (IOException e) {
+      throw new UnknownResponseException(e);
+    }
   }
 
   @Override
@@ -200,7 +215,48 @@ public abstract class AbstractHttpRequest implements WebRequest {
 
   @Override
   public <T> WebResponse<String> doDelete(String url, Map<String, String> header, Map<String, T> params, Charset charset) {
-    return null;
+    if (StringUtils.isEmpty(url)) {
+      throw new IllegalArgumentException("Unexpected url.");
+    }
+    try {
+      if (params != null && !params.isEmpty()) {
+        List<NameValuePair> pairs = new ArrayList<NameValuePair>(params.size());
+        for (Map.Entry<String, T> entry : params.entrySet()) {
+          String value = (String) entry.getValue();
+          if (value != null) {
+            pairs.add(new BasicNameValuePair(entry.getKey(), value));
+          }
+        }
+        url += "?" + EntityUtils.toString(new UrlEncodedFormEntity(pairs, charset));
+      }
+      HttpDelete httpDelete = new HttpDelete(new URI(url));
+      if (header != null && !header.isEmpty()) {
+        for (Entry<String, String> entry : header.entrySet()) {
+          String name = entry.getKey().trim();
+          String value = entry.getValue().trim();
+          if (!StringUtils.isEmpty(name) && !StringUtils.isEmpty(value)) {
+            httpDelete.setHeader(name, value);
+          }
+        }
+      }
+      CloseableHttpResponse response = this.httpClient.execute(httpDelete);
+      if (response == null) {
+        throw new ConnectException("No response.");
+      }
+      int httpStatusCode = response.getStatusLine().getStatusCode();
+      HttpEntity entity = response.getEntity();
+      String content = null;
+      if (entity != null) {
+        content = EntityUtils.toString(entity, "utf-8");
+      }
+      EntityUtils.consume(entity);
+      response.close();
+      WebResponse<String> result = new WebResponse<String>(httpStatusCode, content);
+      return result;
+    } catch (Exception ex) {
+      ex.printStackTrace();
+      throw new IllegalArgumentException(ex);
+    }
   }
 
   private Header[] buildHeaders(Map<String, String> header) {

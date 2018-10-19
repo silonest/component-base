@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import pers.silonest.component.base.courier.ContentCourier;
 import pers.silonest.component.base.courier.Courier;
 import pers.silonest.component.http.rest.response.RestResponse;
 import pers.silonest.component.util.JsonUtils;
@@ -20,7 +21,7 @@ public class TestRestResponse {
    */
   @Test
   public void testResponseWithStatus() {
-    Courier<String> courier = new Courier<String>();
+    Courier courier = new Courier();
     courier.setStatus(true);
     RestResponse response = RestResponse.builder().courier(courier).build();
     Assert.assertEquals(response.toString(), "{\"status\":\"SUCCESS\"}");
@@ -31,14 +32,14 @@ public class TestRestResponse {
    */
   @Test
   public void testResponseNoStatus() {
-    Courier<String> courier1 = new Courier<String>();
+    Courier courier1 = new Courier();
     courier1.setCause("测试");
     RestResponse response1 = RestResponse.builder().courier(courier1).build();
     Assert.assertEquals(response1.toString(), "{\"status\":\"SUCCESS\",\"message\":{\"cause\":\"测试\"}}");
-    Courier<String> courier2 = new Courier<String>();
+    Courier courier2 = new Courier();
     RestResponse response2 = RestResponse.builder().courier(courier2).build();
     Assert.assertEquals(response2.toString(), "{\"status\":\"SUCCESS\"}");
-    Courier<String> courier3 = new Courier<String>();
+    Courier courier3 = new Courier();
     courier3.setCause("测试");
     courier3.setNotice("test");
     RestResponse response3 = RestResponse.builder().courier(courier3).build();
@@ -50,7 +51,7 @@ public class TestRestResponse {
    */
   @Test
   public void testResponseWithAllParameter() {
-    Courier<String> courier = new Courier<String>();
+    ContentCourier<String> courier = new ContentCourier<String>();
     courier.setStatus(true);
     courier.setCode("123");
     courier.setCause("测试");
@@ -70,7 +71,7 @@ public class TestRestResponse {
     List<String> content1 = new ArrayList<String>();
     content1.add("测试1");
     content1.add("测试2");
-    Courier<List<String>> courier1 = new Courier<List<String>>();
+    ContentCourier<List<String>> courier1 = new ContentCourier<List<String>>();
     courier1.setStatus(true);
     courier1.setCode("123");
     courier1.setCause("测试");
@@ -86,7 +87,7 @@ public class TestRestResponse {
     Map<String, String> content1 = new HashMap<String, String>();
     content1.put("param2", "测试2");
     content1.put("param1", "测试1");
-    Courier<Map<String, String>> courier1 = new Courier<Map<String, String>>();
+    ContentCourier<Map<String, String>> courier1 = new ContentCourier<Map<String, String>>();
     courier1.setStatus(true);
     courier1.setCode("123");
     courier1.setCause("测试");
@@ -105,7 +106,7 @@ public class TestRestResponse {
     map2.put("object2-param1", "object2-测试1");
     content2.put("object2", map2);
     content2.put("object1", map1);
-    Courier<Map<String, Map<String, String>>> courier2 = new Courier<Map<String, Map<String, String>>>();
+    ContentCourier<Map<String, Map<String, String>>> courier2 = new ContentCourier<Map<String, Map<String, String>>>();
     courier2.setStatus(true);
     courier2.setCode("123");
     courier2.setCause("测试");
@@ -113,9 +114,9 @@ public class TestRestResponse {
     courier2.setContent(content2);
     RestResponse response2 = RestResponse.builder().courier(courier2).build();
     JsonNode jsonNode = JsonUtils.toJsonNode(response2);
-    
+
     Assert.assertEquals(jsonNode.get("status").asText(), "SUCCESS");
-    
+
     Assert.assertEquals(jsonNode.get("message").get("notice").asText(), "test");
     Assert.assertEquals(jsonNode.get("message").get("cause").asText(), "测试");
     Assert.assertEquals(jsonNode.get("message").get("code").asText(), "123");

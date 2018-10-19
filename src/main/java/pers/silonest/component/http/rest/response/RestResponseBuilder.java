@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import pers.silonest.component.base.courier.ContentCourier;
 import pers.silonest.component.base.courier.Courier;
 import pers.silonest.component.util.StringUtils;
 
@@ -78,7 +79,7 @@ public class RestResponseBuilder {
     return this;
   }
 
-  public <T> RestResponseBuilder courier(Courier<T> courier) {
+  public <T> RestResponseBuilder courier(Courier courier) {
     status(courier.getStatus() ? Status.SUCCESS : Status.ERROR);
     if (!StringUtils.isEmpty(courier.getCause())) {
       cause(courier.getCause());
@@ -89,8 +90,31 @@ public class RestResponseBuilder {
     if (!StringUtils.isEmpty(courier.getCode())) {
       code(courier.getCode());
     }
-    if (courier.getContent() != null) {
-      content(courier.getContent());
+    if (courier instanceof ContentCourier) {
+      @SuppressWarnings("unchecked")
+      ContentCourier<T> contentCourier = (ContentCourier<T>) courier;
+      if (contentCourier.getContent() != null) {
+        Object content = contentCourier.getContent();
+        if (content instanceof List) {
+          List<?> contentList = (List<?>) content;
+          if (contentList.size() == 0) {
+            status(Status.NORESOURCES);
+          } else {
+            content(contentCourier.getContent());
+          }
+        } else if (content instanceof Map) {
+          Map<?, ?> contentMap = (Map<?, ?>) content;
+          if (contentMap.size() == 0) {
+            status(Status.NORESOURCES);
+          } else {
+            content(contentCourier.getContent());
+          }
+        } else {
+          content(contentCourier.getContent());
+        }
+      } else {
+        status(Status.NORESOURCES);
+      }
     }
     return this;
   }
