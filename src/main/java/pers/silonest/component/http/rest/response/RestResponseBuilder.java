@@ -5,11 +5,17 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import pers.silonest.component.base.courier.ContentCourier;
 import pers.silonest.component.base.courier.Courier;
 import pers.silonest.component.util.StringUtils;
 
+/**
+ * 相应结果的生成器.
+ * 
+ * @author silonest
+ * @version 0.0.1
+ * @since v1.0.0
+ */
 public class RestResponseBuilder {
 
   public RestResponseBuilder status(Status status) {

@@ -7,7 +7,6 @@ import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
-
 import pers.silonest.component.util.Assert;
 
 public class AbstractResource implements Resource {
@@ -49,8 +48,8 @@ public class AbstractResource implements Resource {
   }
 
   /**
-   * This implementation throws a FileNotFoundException, assuming that the resource cannot be
-   * resolved to a URL.
+   * This implementation throws a FileNotFoundException, assuming that the resource cannot be resolved
+   * to a URL.
    */
   @Override
   public URL getURL() throws IOException {
@@ -71,8 +70,8 @@ public class AbstractResource implements Resource {
   }
 
   /**
-   * This implementation throws a FileNotFoundException, assuming that the resource cannot be
-   * resolved to an absolute file path.
+   * This implementation throws a FileNotFoundException, assuming that the resource cannot be resolved
+   * to an absolute file path.
    */
   @Override
   public File getFile() throws IOException {
@@ -80,9 +79,8 @@ public class AbstractResource implements Resource {
   }
 
   /**
-   * This implementation reads the entire InputStream to calculate the content length. Subclasses
-   * will almost always be able to provide a more optimal version of this, e.g. checking a File
-   * length.
+   * This implementation reads the entire InputStream to calculate the content length. Subclasses will
+   * almost always be able to provide a more optimal version of this, e.g. checking a File length.
    * 
    * @see #getInputStream()
    * @throws IllegalStateException if {@link #getInputStream()} returns null.
@@ -144,8 +142,8 @@ public class AbstractResource implements Resource {
   }
 
   /**
-   * This implementation always returns {@code null}, assuming that this resource type does not have
-   * a filename.
+   * This implementation always returns {@code null}, assuming that this resource type does not have a
+   * filename.
    */
   @Override
   public String getFilename() {
@@ -185,13 +183,11 @@ public class AbstractResource implements Resource {
 
   @Override
   public String getDescription() {
-    // TODO Auto-generated method stub
     return null;
   }
 
   @Override
   public InputStream getInputStream() throws IOException {
-    // TODO Auto-generated method stub
     return null;
   }
 }
