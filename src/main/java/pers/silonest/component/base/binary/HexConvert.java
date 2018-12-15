@@ -1,7 +1,7 @@
 package pers.silonest.component.base.binary;
 
 public class HexConvert implements DataConvert {
-  
+
   private String hexStr = null;
 
   public HexConvert(String hex) {
@@ -58,9 +58,33 @@ public class HexConvert implements DataConvert {
     return hex;
   }
 
+  /**
+   * 10进制转换成16进制.不补零。
+   * 
+   * @param value
+   * @return
+   */
   public static String int2Hex(int value) {
     String hex = Integer.toHexString(value);
     return hex;
+  }
+
+  /**
+   * 10进制转换成16进制.一字节长度，不足补零。
+   * 
+   * @param value
+   * @return
+   */
+  public static String int2HexFix1Byte(int value) {
+    return String.format("%02x", value);
+  }
+
+  public static String int2HexFix2Byte(int value) {
+    return String.format("%04x", value);
+  }
+
+  public static String int2HexFix4Byte(int value) {
+    return String.format("%08x", value);
   }
 
   public static String long2Hex(long value) {
@@ -77,5 +101,5 @@ public class HexConvert implements DataConvert {
     ByteConvert bc = new ByteConvert(binary);
     return bc.toHex();
   }
-  
+
 }
