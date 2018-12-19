@@ -1,10 +1,5 @@
 package pers.silonest.component.excel;
 
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-
 import java.beans.IntrospectionException;
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Constructor;
@@ -18,10 +13,13 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import pers.silonest.component.excel.annotation.ExcelColumn;
 import pers.silonest.component.excel.annotation.ExcelDisguised;
 import pers.silonest.component.excel.annotation.ExcelFormat;
-import pers.silonest.component.excel.annotation.ExcelColumn;
 import pers.silonest.component.excel.pojo.Title;
 import pers.silonest.component.excel.style.AlignStyle;
 import pers.silonest.component.excel.style.BackGroundColorStyle2Body;
@@ -253,6 +251,7 @@ class Writer {
   }
 
   public class ComparatorField implements Comparator<Field> {
+    @Override
     public int compare(Field o1, Field o2) {
       String order1 = o1.getAnnotation(ExcelColumn.class).order();
       String order2 = o2.getAnnotation(ExcelColumn.class).order();

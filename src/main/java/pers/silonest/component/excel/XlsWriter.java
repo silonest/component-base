@@ -3,7 +3,6 @@ package pers.silonest.component.excel;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Workbook;
-
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collections;
@@ -37,6 +36,7 @@ class XlsWriter extends Writer {
     HSSFWorkbook hwRs = new HSSFWorkbook();
     List<Title> listTitle = newTitle(fields);
     Collections.sort(listTitle, new Comparator<Title>() {
+      @Override
       public int compare(Title o1, Title o2) {
         Title title1 = o1;
         Title title2 = o2;
@@ -44,6 +44,7 @@ class XlsWriter extends Writer {
       }
     });
     Collections.sort(fields, new Comparator<Field>() {
+      @Override
       public int compare(Field o1, Field o2) {
         Field field1 = o1;
         ExcelColumn inst1 = field1.getAnnotation(ExcelColumn.class);
@@ -91,6 +92,7 @@ class XlsWriter extends Writer {
       List<Field> fields = eraseField(paramsList);
       List<Title> listTitle = newTitle(fields);// 生成title
       Collections.sort(listTitle, new Comparator<Title>() {
+        @Override
         public int compare(Title o1, Title o2) {
           Title title1 = o1;
           Title title2 = o2;
@@ -98,6 +100,7 @@ class XlsWriter extends Writer {
         }
       });
       Collections.sort(fields, new Comparator<Field>() {
+        @Override
         public int compare(Field o1, Field o2) {
           Field field1 = o1;
           ExcelColumn inst1 = field1.getAnnotation(ExcelColumn.class);

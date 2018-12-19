@@ -55,8 +55,9 @@ public class ListeningThread extends Thread {
   }
 
   public void stopRunning() {
-    for (int i = 0; i < connectionThreads.size(); i++)
+    for (int i = 0; i < connectionThreads.size(); i++) {
       connectionThreads.elementAt(i).stopRunning();
+    }
     isRunning = false;
   }
 }

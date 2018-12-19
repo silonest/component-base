@@ -5,23 +5,23 @@ package pers.silonest.component.base.exception;
  *
  * @author silonest
  */
-public class BusinessUnitError extends RuntimeException {
+public class BusinessUnitErrorException extends RuntimeException {
 
   private static final long serialVersionUID = 1L;
 
-  public BusinessUnitError() {
+  public BusinessUnitErrorException() {
     super();
   }
 
-  public BusinessUnitError(String message) {
+  public BusinessUnitErrorException(String message) {
     super(message);
   }
 
-  public BusinessUnitError(String message, Throwable cause) {
+  public BusinessUnitErrorException(String message, Throwable cause) {
     super(message, cause);
   }
 
-  public BusinessUnitError(Throwable cause) {
+  public BusinessUnitErrorException(Throwable cause) {
     super(cause);
   }
 }

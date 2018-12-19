@@ -28,4 +28,24 @@ public abstract class CheckSumUtils {
     }
     return hex;
   }
+
+  public static byte getCs(byte[] bts) {
+    return getCs(bts, 0, bts.length);
+  }
+
+  /**
+   * 累积和校验
+   * 
+   * @param bts 校验数组
+   * @param startindex 校验开始索引
+   * @param len 校验从开始索引的字节长度
+   * @return
+   */
+  public static byte getCs(byte[] bts, int startindex, int len) {
+    byte re = 0;
+    for (int i = startindex; i < startindex + len; i++) {
+      re += bts[i];
+    }
+    return re;
+  }
 }

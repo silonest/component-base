@@ -52,8 +52,9 @@ public class SocketClient {
       PrintWriter writer = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()), true);
       writer.println(MessageFlag.connectionClosed);
 
-      if (socket != null && !socket.isClosed())
+      if (socket != null && !socket.isClosed()) {
         socket.close();
+      }
     } catch (IOException e) {
       e.printStackTrace();
     }

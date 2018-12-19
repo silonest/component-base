@@ -11,5 +11,6 @@ import org.apache.poi.ss.usermodel.CellStyle;
  * @since v1.0.0
  */
 public abstract class CellStyleMaker extends ExcelCellStyle {
+  @Override
   public abstract CellStyle getStyle();
 }

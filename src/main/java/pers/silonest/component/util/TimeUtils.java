@@ -4,7 +4,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-
 import javax.xml.bind.DataBindingException;
 
 /**
@@ -194,8 +193,9 @@ public class TimeUtils {
     public static int days4YearInLunar(int year) {
       int i, sum = 348;
       for (i = 0x8000; i > 0x8; i >>= 1) {
-        if ((lunarInfo[year - MIN_YEAR] & i) != 0)
+        if ((lunarInfo[year - MIN_YEAR] & i) != 0) {
           sum += 1;
+        }
       }
       return (sum + days4LeapInLunar(year));
     }
@@ -208,12 +208,14 @@ public class TimeUtils {
      */
     public static int days4LeapInLunar(int year) {
       if (leapMonth(year) != 0) {
-        if ((lunarInfo[year - MIN_YEAR] & 0x10000) != 0)
+        if ((lunarInfo[year - MIN_YEAR] & 0x10000) != 0) {
           return 30;
-        else
+        } else {
           return 29;
-      } else
+        }
+      } else {
         return 0;
+      }
     }
 
     /**
@@ -224,10 +226,11 @@ public class TimeUtils {
      * @return
      */
     public static int days4MonthInLunar(int year, int month) {
-      if ((lunarInfo[year - MIN_YEAR] & (0x10000 >> month)) == 0)
+      if ((lunarInfo[year - MIN_YEAR] & (0x10000 >> month)) == 0) {
         return 29;
-      else
+      } else {
         return 30;
+      }
     }
 
     /**
@@ -411,12 +414,14 @@ public class TimeUtils {
      */
     private static String getDayInChinese(int day) {
       int n = day % 10 == 0 ? 9 : day % 10 - 1;
-      if (day > 30)
+      if (day > 30) {
         return "出错";
-      if (day == 10)
+      }
+      if (day == 10) {
         return "初十";
-      else
+      } else {
         return chineseTen[day / 10] + chineseDay[n];
+      }
     }
   }
 
@@ -647,6 +652,23 @@ public class TimeUtils {
     SimpleDateFormat formater = new SimpleDateFormat();
     formater.applyPattern(format);
     return formater.format(date);
+  }
+
+  /**
+   * 获取当前时间的字节数组
+   * 
+   * @return
+   */
+  public static byte[] getCurrentTimeByteArry() {
+    String timestr = getCurrentTime("yyMMddHHmmss");
+    byte[] bts = new byte[6];
+    bts[5] = Byte.valueOf(timestr.substring(0, 2), 16);
+    bts[4] = Byte.valueOf(timestr.substring(2, 4), 16);
+    bts[3] = Byte.valueOf(timestr.substring(4, 6), 16);
+    bts[2] = Byte.valueOf(timestr.substring(6, 8), 16);
+    bts[1] = Byte.valueOf(timestr.substring(8, 10), 16);
+    bts[0] = Byte.valueOf(timestr.substring(10, 12), 16);
+    return bts;
   }
 
   /**
